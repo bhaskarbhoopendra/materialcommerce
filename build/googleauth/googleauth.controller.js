@@ -9,6 +9,13 @@ class GoogleAuthController {
     constructor() {
         this.path = "/auth/google";
         this.router = (0, express_1.Router)();
+        this.googleLogout = async (request, response, next) => {
+            request.logout((error) => {
+                if (error)
+                    return next(error);
+                response.send("LoggedOUt");
+            });
+        };
         this.initializeRoutes();
     }
     initializeRoutes() {
@@ -21,6 +28,7 @@ class GoogleAuthController {
             failureFlash: true,
             successFlash: "Successfully logged in!",
         }));
+        this.router.get("/logout", this.googleLogout);
     }
 }
 exports.default = GoogleAuthController;

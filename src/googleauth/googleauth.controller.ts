@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Router, Response, NextFunction } from "express";
 import passport from "passport";
 import Controller from "../interfaces/controller.interface";
 
@@ -25,7 +25,20 @@ class GoogleAuthController implements Controller {
         successFlash: "Successfully logged in!",
       })
     );
+
+    this.router.get("/logout", this.googleLogout);
   }
+
+  private googleLogout = async (
+    request: Request,
+    response: Response,
+    next: NextFunction
+  ) => {
+    request.logout((error) => {
+      if (error) return next(error);
+      response.send("LoggedOUt");
+    });
+  };
 }
 
 export default GoogleAuthController;
