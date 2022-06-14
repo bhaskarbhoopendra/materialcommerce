@@ -23,12 +23,15 @@ passport_1.default.use(new googleStrategy({
     //   const googleAuthService = new GoogleAuthService();
     try {
         const currentUser = await user_model_1.default.findOne({ googleId: profile.id });
-        if (currentUser)
-            done(null, currentUser);
-        const user = await user_model_1.default.create(newUser);
-        done(null, user);
+        if (currentUser) {
+            return done(null, currentUser);
+        }
+        else {
+            const user = await user_model_1.default.create(newUser);
+            return done(null, user);
+        }
     }
     catch (error) {
-        done(error, false);
+        return done(error, false);
     }
 }));
