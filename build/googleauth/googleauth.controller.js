@@ -30,10 +30,14 @@ const express_1 = require("express");
 const passport_1 = __importDefault(require("passport"));
 const user_model_1 = __importDefault(require("../user/user.model"));
 const jwt = __importStar(require("jsonwebtoken"));
+const auth_middleware_1 = __importDefault(require("../middleware/auth.middleware"));
 class GoogleAuthController {
     constructor() {
         this.path = "/auth/google";
         this.router = (0, express_1.Router)();
+        this.test = async (request, response) => {
+            response.send("Hello From Test");
+        };
         this.cookieAndToken = async (request, response) => {
             var _a, _b, _c, _d, _e, _f;
             console.log("redirected", request.user);
@@ -53,6 +57,9 @@ class GoogleAuthController {
                 });
                 if (currentUser) {
                     response.send(currentUser);
+                    const tokenData = this.createToken(currentUser);
+                    response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+                    response.send({ tokenData, currentUser });
                 }
                 else {
                     const user = await user_model_1.default.create(newUser);
@@ -81,6 +88,7 @@ class GoogleAuthController {
         }));
         this.router.get("/auth/google/callback", passport_1.default.authenticate("google"), this.cookieAndToken);
         this.router.get("/logout", this.googleLogout);
+        this.router.get(`${this.path}/test`, auth_middleware_1.default, this.test);
     }
     createCookie(tokenData) {
         return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;

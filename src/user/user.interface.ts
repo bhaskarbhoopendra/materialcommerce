@@ -3,9 +3,10 @@ interface Base {
   firstName: string;
   lastName: string;
   source: string;
-  lastVisited: Date;
+  lastVisited?: Date;
   phoeNumber: number;
   googleId: string;
+  profilePhoto: string;
 }
 
 interface IUser extends Base {

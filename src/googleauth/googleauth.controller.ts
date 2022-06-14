@@ -6,6 +6,7 @@ import * as jwt from "jsonwebtoken";
 import TokenData from "../interfaces/tokenData.interface";
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
 import IUser from "../user/user.interface";
+import authMiddleware from "../middleware/auth.middleware";
 class GoogleAuthController implements Controller {
   path = "/auth/google";
   router = Router();
@@ -25,13 +26,22 @@ class GoogleAuthController implements Controller {
     this.router.get(
       "/auth/google/callback",
       passport.authenticate("google"),
-      this.cookieAndToken
+      this.googleCallbackWithCookieAndToken
     );
 
     this.router.get("/logout", this.googleLogout);
+
+    this.router.get(`${this.path}/test`, authMiddleware, this.test);
   }
 
-  private cookieAndToken = async (request: Request, response: Response) => {
+  private test = async (request: Request, response: Response) => {
+    response.send("Hello From Test");
+  };
+
+  private googleCallbackWithCookieAndToken = async (
+    request: Request,
+    response: Response
+  ) => {
     console.log("redirected", request.user);
     // const profile = { ...request.user };
     const newUser = {
@@ -49,9 +59,11 @@ class GoogleAuthController implements Controller {
         googleId: request.user?.id,
       });
       if (currentUser) {
-        response.send(currentUser);
+        const tokenData = this.createToken(currentUser);
+        response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+        response.send({ tokenData, currentUser });
       } else {
-        const user = await UserModel.create(newUser);
+        const user: IUser = await UserModel.create(newUser);
         const tokenData = this.createToken(user);
         response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
         response.send({ tokenData, user });
