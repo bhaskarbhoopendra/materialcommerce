@@ -5,10 +5,11 @@ interface Base {
   source: string;
   lastVisited: Date;
   phoeNumber: number;
+  googleId: string;
 }
 
 interface IUser extends Base {
-  id: string;
+  _id: string;
 }
 
 export default IUser;

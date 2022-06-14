@@ -18,27 +18,29 @@ passport.use(
       profile: any,
       done: any
     ) => {
-      const newUser = {
-        googleId: profile.id,
-        email: profile.emails[0].value,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-        profilePhoto: profile.photos[0].value,
-        source: "google",
-      };
+      return done(null, profile);
+
+      // const newUser = {
+      //   googleId: profile.id,
+      //   email: profile.emails[0].value,
+      //   firstName: profile.name.givenName,
+      //   lastName: profile.name.familyName,
+      //   profilePhoto: profile.photos[0].value,
+      //   source: "google",
+      // };
 
       //   const googleAuthService = new GoogleAuthService();
-      try {
-        const currentUser = await UserModel.findOne({ googleId: profile.id });
-        if (currentUser) {
-          return done(null, currentUser);
-        } else {
-          const user = await UserModel.create(newUser);
-          return done(null, user);
-        }
-      } catch (error) {
-        return done(error, false);
-      }
+      //   try {
+      //     const currentUser = await UserModel.findOne({ googleId: profile.id });
+      //     if (currentUser) {
+      //       return done(null, currentUser);
+      //     } else {
+      //       const user = await UserModel.create(newUser);
+      //       return done(null, user);
+      //     }
+      //   } catch (error) {
+      //     return done(error, false);
+      //   }
     }
   )
 );
