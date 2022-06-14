@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const passport_1 = __importDefault(require("passport"));
 const user_model_1 = __importDefault(require("../user/user.model"));
 passport_1.default.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user);
 });
 passport_1.default.deserializeUser(async (id, done) => {
     const currentUser = await user_model_1.default.findOne({ id });

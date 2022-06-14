@@ -19,8 +19,8 @@ class GoogleAuthController implements Controller {
     this.router.get(
       "/auth/google/callback",
       passport.authenticate("google", {
-        failureRedirect: "/",
-        successRedirect: "/profile",
+        failureRedirect: "/index.html",
+        successRedirect: "/hello.html",
         failureFlash: true,
         successFlash: "Successfully logged in!",
       })

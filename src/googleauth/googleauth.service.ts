@@ -1,3 +1,4 @@
+import IUser from "../user/user.interface";
 import UserModel from "../user/user.model";
 
 class GoogleAuthService {
@@ -5,9 +6,9 @@ class GoogleAuthService {
   constructor() {}
 
   addGoogleUser = async ({ ...userData }) => {
-    const { id, email, firstName, lastName, profilePhoto } = userData;
+    const { googleId, email, firstName, lastName, profilePhoto } = userData;
     const user = new this.usermodel({
-      id,
+      googleId,
       email,
       firstName,
       lastName,

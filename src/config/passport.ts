@@ -3,7 +3,7 @@ import IUser from "../user/user.interface";
 import UserModel from "../user/user.model";
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 
 passport.deserializeUser(async (id, done) => {

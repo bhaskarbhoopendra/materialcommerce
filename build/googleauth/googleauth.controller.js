@@ -16,8 +16,8 @@ class GoogleAuthController {
             scope: ["email", "profile"],
         }));
         this.router.get("/auth/google/callback", passport_1.default.authenticate("google", {
-            failureRedirect: "/",
-            successRedirect: "/profile",
+            failureRedirect: "/index.html",
+            successRedirect: "/hello.html",
             failureFlash: true,
             successFlash: "Successfully logged in!",
         }));

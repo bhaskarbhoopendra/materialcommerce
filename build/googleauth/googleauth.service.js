@@ -20,9 +20,9 @@ class GoogleAuthService {
         this.usermodel = user_model_1.default;
         this.addGoogleUser = async (_a) => {
             var userData = __rest(_a, []);
-            const { id, email, firstName, lastName, profilePhoto } = userData;
+            const { googleId, email, firstName, lastName, profilePhoto } = userData;
             const user = new this.usermodel({
-                id,
+                googleId,
                 email,
                 firstName,
                 lastName,

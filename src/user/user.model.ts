@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import IUser from "./user.interface";
 
 const userSchema = new mongoose.Schema({
-  id: {
+  googleId: {
     type: String,
     default: null,
   },

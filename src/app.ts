@@ -10,6 +10,7 @@ import session from "express-session";
 import passport from "passport";
 import "./config/google";
 import "./config/passport";
+import flash from "express-flash";
 
 class App {
   public app = express.application;
@@ -41,10 +42,17 @@ class App {
     this.app.use(express.json());
     this.app.use(cors());
     this.app.use(cookieParser());
-    this.app.use(session({ secret: "melody hensley is my spirit animal" }));
+    this.app.use(
+      session({
+        secret: "melody hensley is my spirit animal",
+        resave: true,
+        saveUninitialized: true,
+      })
+    );
     this.app.use(
       morgan(":method :url :status :res[content-length] - :response-time ms")
     );
+    this.app.use(flash());
     this.app.use(express.static(`${__dirname}/public`));
     this.app.use(passport.initialize());
     this.app.use(passport.session());
