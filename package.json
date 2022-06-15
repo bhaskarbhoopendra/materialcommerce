@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc -w & nodemon build/server.js"
+    "dev": "tsc -w & nodemon build/server.js",
+    "start":"node build/server.js"
   },
   "author": "bhoopendra",
   "license": "ISC",

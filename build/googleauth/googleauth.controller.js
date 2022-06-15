@@ -38,7 +38,7 @@ class GoogleAuthController {
         this.test = async (request, response) => {
             response.send("Hello From Test");
         };
-        this.cookieAndToken = async (request, response) => {
+        this.googleCallbackWithCookieAndToken = async (request, response) => {
             var _a, _b, _c, _d, _e, _f;
             console.log("redirected", request.user);
             // const profile = { ...request.user };
@@ -56,7 +56,6 @@ class GoogleAuthController {
                     googleId: (_f = request.user) === null || _f === void 0 ? void 0 : _f.id,
                 });
                 if (currentUser) {
-                    response.send(currentUser);
                     const tokenData = this.createToken(currentUser);
                     response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
                     response.send({ tokenData, currentUser });
@@ -86,7 +85,7 @@ class GoogleAuthController {
         this.router.get(`${this.path}`, passport_1.default.authenticate("google", {
             scope: ["email", "profile"],
         }));
-        this.router.get("/auth/google/callback", passport_1.default.authenticate("google"), this.cookieAndToken);
+        this.router.get("/auth/google/callback", passport_1.default.authenticate("google"), this.googleCallbackWithCookieAndToken);
         this.router.get("/logout", this.googleLogout);
         this.router.get(`${this.path}/test`, auth_middleware_1.default, this.test);
     }
