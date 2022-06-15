@@ -7,10 +7,11 @@ const userSchema = new mongoose.Schema({
     default: null,
   },
   email: String,
+  password: String,
   firstName: String,
   lastName: String,
   phoneNumber: String,
-  source: { type: String, required: [true, "Source not specified"] },
+  source: { type: String },
   lastVisited: { type: Date, default: new Date() },
 });
 

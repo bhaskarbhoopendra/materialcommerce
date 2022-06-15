@@ -13,6 +13,9 @@ class UserDTO {
   @IsString()
   email!: string;
 
+  @IsString()
+  password!: string;
+
   @IsNumber()
   phoneNumber?: number;
 

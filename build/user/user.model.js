@@ -10,10 +10,11 @@ const userSchema = new mongoose_1.default.Schema({
         default: null,
     },
     email: String,
+    password: String,
     firstName: String,
     lastName: String,
     phoneNumber: String,
-    source: { type: String, required: [true, "Source not specified"] },
+    source: { type: String },
     lastVisited: { type: Date, default: new Date() },
 });
 const UserModel = mongoose_1.default.model("user", userSchema);
