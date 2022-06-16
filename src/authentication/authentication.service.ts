@@ -18,7 +18,6 @@ class AuthenticationService {
     try {
 
       const email = userData.email;
-      console.log(email);
       const password = userData.password;
       if (await this.user.findOne({ email }))
         throw new UserWithThatEmailAlreadyExistsException(email);

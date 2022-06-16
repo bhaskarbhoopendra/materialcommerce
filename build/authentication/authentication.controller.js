@@ -41,7 +41,7 @@ class AuthenticationController {
                 return error;
             }
         };
-        this.userLogout = async (request, response) => {
+        this.userLogout = (request, response) => {
             try {
                 response.setHeader('Set-Cookie', ['Authorization=,Max-Age=0']);
                 response.send("logged out");
