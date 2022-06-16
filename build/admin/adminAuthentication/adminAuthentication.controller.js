@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const bcrypt = __importStar(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jwt = __importStar(require("jsonwebtoken"));
 const admin_model_1 = __importDefault(require("../admin.model"));
 const admin_authenticate_service_1 = __importDefault(require("./admin.authenticate.service"));
@@ -54,7 +54,7 @@ class AdminAuthenticationController {
                 const logInData = request.body;
                 const vendor = await this.admin.findOne({ email: logInData.email });
                 if (vendor) {
-                    const isPasswordMatching = await bcrypt.compare(logInData.password, vendor.get("password", null, { getters: false }));
+                    const isPasswordMatching = await bcryptjs_1.default.compare(logInData.password, vendor.get("password", null, { getters: false }));
                     if (isPasswordMatching) {
                         const tokenData = this.createToken(vendor);
                         response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
@@ -74,7 +74,7 @@ class AdminAuthenticationController {
             const logInData = request.body;
             const vendor = await this.admin.findOne({ email: logInData.email });
             if (vendor) {
-                const isPasswordMatching = await bcrypt.compare(logInData.password, vendor.get("password", null, { getters: false }));
+                const isPasswordMatching = await bcryptjs_1.default.compare(logInData.password, vendor.get("password", null, { getters: false }));
                 if (isPasswordMatching) {
                     const tokenData = this.createToken(vendor);
                     response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
