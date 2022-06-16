@@ -1,8 +1,9 @@
+import UserDTO from "./user.dto";
 import userModel from "./user.model";
 
-class userDbManager {
+class UserDbManager {
   user = userModel;
-  public id !: string;
+  public id: string;
   public data: any;
   constructor() {
     this.getUserById(this.id);
@@ -14,7 +15,7 @@ class userDbManager {
     return await this.user.findById(id);
   }
 
-  createUser = async (data: any) => {
+  createUser = async (data: UserDTO) => {
     return await this.user.create(data);
   }
 
@@ -27,4 +28,4 @@ class userDbManager {
   }
 }
 
-export default userDbManager; 
+export default UserDbManager; 

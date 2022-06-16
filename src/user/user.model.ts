@@ -12,9 +12,11 @@ const userSchema = new mongoose.Schema({
   lastName: String,
   phoneNumber: String,
   source: { type: String },
-  lastVisited: { type: Date, default: new Date() },
+  lastVisited: { type: Date, default: new Date() }
 });
 
 const UserModel = mongoose.model<IUser & mongoose.Document>("user", userSchema);
 
 export default UserModel;
+
+//source: { type: String, required: [true, "Source not specified"] },

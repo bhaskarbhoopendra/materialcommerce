@@ -28,11 +28,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const userWithThatEmailAlreadyExistsException_1 = __importDefault(require("../exceptions/userWithThatEmailAlreadyExistsException"));
 const user_model_1 = __importDefault(require("../user/user.model"));
-const bcrypt = __importStar(require("bcrypt"));
+const bcrypt = __importStar(require("bcryptjs"));
 const user_dbmanager_1 = __importDefault(require("../user/user.dbmanager"));
 const jwt = __importStar(require("jsonwebtoken"));
 const wrongCredentialsException_1 = __importDefault(require("../exceptions/wrongCredentialsException"));
-class authenticationService {
+class AuthenticationService {
     constructor() {
         this.user = user_model_1.default;
         this.userDbManager = new user_dbmanager_1.default();
@@ -44,7 +44,6 @@ class authenticationService {
                 if (await this.user.findOne({ email }))
                     throw new userWithThatEmailAlreadyExistsException_1.default(email);
                 const hashedPassword = await bcrypt.hash(password, 10);
-                console.log(hashedPassword);
                 const user = await this.userDbManager.createUser(Object.assign(Object.assign({}, userData), { password: hashedPassword }));
                 const tokenData = this.createToken(user);
                 const cookie = this.createCookie(tokenData);
@@ -87,4 +86,4 @@ class authenticationService {
         };
     }
 }
-exports.default = authenticationService;
+exports.default = AuthenticationService;

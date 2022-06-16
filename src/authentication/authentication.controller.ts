@@ -1,14 +1,15 @@
 import { Router, Request, Response } from "express";
 import Controller from "../interfaces/controller.interface";
 import userDto from "../user/user.dto";
-import authenticationService from "./authentication.service";
+import AuthenticationService from "./authentication.service";
+import loginDto from "./login.dto";
 
 
-class authenticationController implements Controller {
+class AuthenticationController implements Controller {
 
   public path = "/auth";
   public router = Router();
-  authenticationService = new authenticationService();
+  authenticationService = new AuthenticationService();
 
   constructor() {
     this.initializeRoutes();
@@ -21,41 +22,41 @@ class authenticationController implements Controller {
     this.router.post(`${this.path}/logout`, this.userLogout);
   }
 
-  private registerUser = async (req: Request, res: Response) => {
+  private registerUser = async (request: Request, response: Response) => {
 
-    const userData: userDto = req.body;
+    const userData: userDto = request.body;
     try {
       const { user, cookie } = await this.authenticationService.register(userData);
-      res.setHeader('Set-Cookie', [cookie]);
-      res.send({ user });
+      response.setHeader('Set-Cookie', [cookie]);
+      response.send({ user });
 
     } catch (error) {
       return error;
     }
   }
 
-  private userLogin = async (req: Request, res: Response) => {
+  private userLogin = async (request: Request, response: Response) => {
 
-    const loginCred: any = req.body;
+    const loginCred: loginDto = request.body;
     try {
       const email = loginCred.email;
       const password = loginCred.password;
       if (email === null || email === undefined || password === null || password === undefined)
-        res.send("invalid input");
+        response.send("invalid input");
       const { user, cookie, tokenData } = await this.authenticationService.login(loginCred);
 
-      res.setHeader('Set-Cookie', [cookie]);
-      res.send({ user, tokenData });
+      response.setHeader('Set-Cookie', [cookie]);
+      response.send({ user, tokenData });
 
     } catch (error) {
       return error;
     }
   }
 
-  private userLogout = async (req: Request, res: Response) => {
+  private userLogout = (request: Request, response: Response) => {
     try {
-      res.setHeader('Set-Cookie', ['Authorization=,Max-Age=0']);
-      res.send("logged out");
+      response.setHeader('Set-Cookie', ['Authorization=,Max-Age=0']);
+      response.send("logged out");
 
     } catch (error) {
       return error;
@@ -64,4 +65,4 @@ class authenticationController implements Controller {
   }
 }
 
-export default authenticationController;
+export default AuthenticationController;

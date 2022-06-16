@@ -1,18 +1,22 @@
 import UserWithThatEmailAlreadyExistsException from "../exceptions/userWithThatEmailAlreadyExistsException";
 import UserModel from "../user/user.model";
-import * as bcrypt from "bcrypt";
-import userDbManager from "../user/user.dbmanager";
+import * as bcrypt from "bcryptjs";
+import UserDbManager from "../user/user.dbmanager";
 import IUser from "../user/user.interface";
 import TokenData from "../interfaces/takenData.interface"
 import * as jwt from "jsonwebtoken";
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
 import WrongCredentialsException from "../exceptions/wrongCredentialsException";
-class authenticationService {
+import loginDto from "./login.dto";
+class AuthenticationService {
   user = UserModel;
-  userDbManager = new userDbManager();
+  userDbManager = new UserDbManager();
+
   constructor() { }
+
   register = async (userData: any): Promise<any> => {
     try {
+
       const email = userData.email;
       console.log(email);
       const password = userData.password;
@@ -20,7 +24,8 @@ class authenticationService {
         throw new UserWithThatEmailAlreadyExistsException(email);
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      console.log(hashedPassword)
+
+
       const user: IUser = await this.userDbManager.createUser({
         ...userData,
         password: hashedPassword
@@ -39,7 +44,7 @@ class authenticationService {
     }
   }
 
-  login = async (userCred: any): Promise<any> => {
+  login = async (userCred: loginDto): Promise<any> => {
 
     const email: string = userCred.email;
     const password: string = userCred.password;
@@ -76,4 +81,4 @@ class authenticationService {
   }
 }
 
-export default authenticationService;
+export default AuthenticationService;

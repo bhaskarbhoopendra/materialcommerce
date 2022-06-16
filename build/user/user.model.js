@@ -15,7 +15,8 @@ const userSchema = new mongoose_1.default.Schema({
     lastName: String,
     phoneNumber: String,
     source: { type: String },
-    lastVisited: { type: Date, default: new Date() },
+    lastVisited: { type: Date, default: new Date() }
 });
 const UserModel = mongoose_1.default.model("user", userSchema);
 exports.default = UserModel;
+//source: { type: String, required: [true, "Source not specified"] },

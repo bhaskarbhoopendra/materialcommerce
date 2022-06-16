@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = __importDefault(require("./user.model"));
-class userDbManager {
+class UserDbManager {
     constructor() {
         this.user = user_model_1.default;
         this.getUserById = async (id) => {
@@ -23,4 +23,4 @@ class userDbManager {
         this.createUser(this.data);
     }
 }
-exports.default = userDbManager;
+exports.default = UserDbManager;

@@ -15,7 +15,6 @@ const passport_1 = __importDefault(require("passport"));
 require("./config/google");
 require("./config/passport");
 const express_flash_1 = __importDefault(require("express-flash"));
-const body_parser_1 = __importDefault(require("body-parser"));
 class App {
     constructor(controllers) {
         this.app = express_1.default.application;
@@ -55,7 +54,6 @@ class App {
         });
     }
     initializeMiddleware() {
-        this.app.use(express_1.default.urlencoded({ extended: true }));
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)());
         this.app.use((0, cookie_parser_1.default)());
@@ -69,7 +67,6 @@ class App {
         this.app.use(express_1.default.static(`${__dirname}/public`));
         this.app.use(passport_1.default.initialize());
         this.app.use(passport_1.default.session());
-        this.app.use(body_parser_1.default.urlencoded({ extended: true }));
     }
     initializeErrorHandling() {
         this.app.use(error_middleware_1.default);

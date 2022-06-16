@@ -11,7 +11,7 @@ import passport from "passport";
 import "./config/google";
 import "./config/passport";
 import flash from "express-flash";
-import bodyParser from "body-parser";
+
 
 class App {
   public app = express.application;
@@ -39,7 +39,6 @@ class App {
   }
 
   private initializeMiddleware() {
-    this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     this.app.use(cors());
     this.app.use(cookieParser());
@@ -57,7 +56,6 @@ class App {
     this.app.use(express.static(`${__dirname}/public`));
     this.app.use(passport.initialize());
     this.app.use(passport.session());
-    this.app.use(bodyParser.urlencoded({ extended: true }))
   }
 
   private initializeErrorHandling() {
