@@ -14,13 +14,11 @@ class UserDbManager {
             return await this.user.create(data);
         };
         this.updateUserById = async (id, data) => {
-            return await this.user.findByIdAndUpdate(id, data);
+            return await this.user.findByIdAndUpdate(id, data, { new: true });
         };
         this.deleteUserById = async (id) => {
             return await this.user.findByIdAndDelete(id);
         };
-        this.getUserById(this.id);
-        this.createUser(this.data);
     }
 }
 exports.default = UserDbManager;
