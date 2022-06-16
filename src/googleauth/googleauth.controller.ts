@@ -24,7 +24,7 @@ class GoogleAuthController implements Controller {
     );
 
     this.router.get(
-      "/auth/google/callback",
+      `${this.path}/callback`,
       passport.authenticate("google"),
       this.googleCallbackWithCookieAndToken
     );
