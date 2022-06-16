@@ -50,16 +50,16 @@ class AdminAuthenticationController implements Controller {
   ) => {
     try {
       const logInData: LogInDto = request.body;
-    const vendor = await this.admin.findOne({ email: logInData.email });
-    if (vendor) {
+    const admin = await this.admin.findOne({ email: logInData.email });
+    if (admin) {
       const isPasswordMatching = await bcrypt.compare(
         logInData.password,
-        vendor.get("password", null, { getters: false })
+        admin.get("password", null, { getters: false })
       );
       if (isPasswordMatching) {
-        const tokenData = this.createToken(vendor);
+        const tokenData = this.createToken(admin);
         response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-        response.send({ tokenData, user: vendor });
+        response.send({ tokenData, admin });
       } else {
         next(new WrongCredentialsException());
       }
@@ -70,16 +70,16 @@ class AdminAuthenticationController implements Controller {
       return error
     }
     const logInData: LogInDto = request.body;
-    const vendor = await this.admin.findOne({ email: logInData.email });
-    if (vendor) {
+    const admin = await this.admin.findOne({ email: logInData.email });
+    if (admin) {
       const isPasswordMatching = await bcrypt.compare(
         logInData.password,
-        vendor.get("password", null, { getters: false })
+        admin.get("password", null, { getters: false })
       );
       if (isPasswordMatching) {
-        const tokenData = this.createToken(vendor);
+        const tokenData = this.createToken(admin);
         response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-        response.send({ tokenData, user: vendor });
+        response.send({ tokenData, admin });
       } else {
         next(new WrongCredentialsException());
       }
@@ -88,7 +88,7 @@ class AdminAuthenticationController implements Controller {
     }
   };
 
-  private adminLogout = async (request: Request, response: Response) => {
+  private adminLogout =  (request: Request, response: Response) => {
     try {
       response.setHeader("Set-Cookie", ['Authorization=,Max-Age=0'])
       response.send("Logged Out")

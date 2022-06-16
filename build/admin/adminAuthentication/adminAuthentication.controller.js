@@ -52,13 +52,13 @@ class AdminAuthenticationController {
         this.adminLogin = async (request, response, next) => {
             try {
                 const logInData = request.body;
-                const vendor = await this.admin.findOne({ email: logInData.email });
-                if (vendor) {
-                    const isPasswordMatching = await bcryptjs_1.default.compare(logInData.password, vendor.get("password", null, { getters: false }));
+                const admin = await this.admin.findOne({ email: logInData.email });
+                if (admin) {
+                    const isPasswordMatching = await bcryptjs_1.default.compare(logInData.password, admin.get("password", null, { getters: false }));
                     if (isPasswordMatching) {
-                        const tokenData = this.createToken(vendor);
+                        const tokenData = this.createToken(admin);
                         response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-                        response.send({ tokenData, user: vendor });
+                        response.send({ tokenData, admin });
                     }
                     else {
                         next(new wrongCredentialsException_1.default());
@@ -72,13 +72,13 @@ class AdminAuthenticationController {
                 return error;
             }
             const logInData = request.body;
-            const vendor = await this.admin.findOne({ email: logInData.email });
-            if (vendor) {
-                const isPasswordMatching = await bcryptjs_1.default.compare(logInData.password, vendor.get("password", null, { getters: false }));
+            const admin = await this.admin.findOne({ email: logInData.email });
+            if (admin) {
+                const isPasswordMatching = await bcryptjs_1.default.compare(logInData.password, admin.get("password", null, { getters: false }));
                 if (isPasswordMatching) {
-                    const tokenData = this.createToken(vendor);
+                    const tokenData = this.createToken(admin);
                     response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-                    response.send({ tokenData, user: vendor });
+                    response.send({ tokenData, admin });
                 }
                 else {
                     next(new wrongCredentialsException_1.default());
@@ -88,7 +88,7 @@ class AdminAuthenticationController {
                 next(new wrongCredentialsException_1.default());
             }
         };
-        this.adminLogout = async (request, response) => {
+        this.adminLogout = (request, response) => {
             try {
                 response.setHeader("Set-Cookie", ['Authorization=,Max-Age=0']);
                 response.send("Logged Out");

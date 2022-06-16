@@ -1,5 +1,5 @@
 import TokenData from "../../interfaces/takenData.interface";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import DataStoredInToken from "../../interfaces/dataStoredInToken.interface";
 import AdminModel from "../admin.model";
