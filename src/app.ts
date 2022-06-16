@@ -12,6 +12,7 @@ import "./config/google";
 import "./config/passport";
 import flash from "express-flash";
 
+
 class App {
   public app = express.application;
   public router = express.Router();
@@ -38,7 +39,6 @@ class App {
   }
 
   private initializeMiddleware() {
-    this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     this.app.use(cors());
     this.app.use(cookieParser());

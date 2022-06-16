@@ -1,11 +1,11 @@
-import { IsString } from "class-validator";
+import { IsString } from "class-validator/types/decorator/typechecker/IsString";
 
-class LogInDto {
+class LoginDto {
   @IsString()
-  public email: string;
+  email: string;
 
   @IsString()
-  public password: string;
+  password: string
 }
 
-export default LogInDto;
+export default LoginDto;

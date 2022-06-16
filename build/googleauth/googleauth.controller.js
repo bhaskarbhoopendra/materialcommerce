@@ -85,7 +85,7 @@ class GoogleAuthController {
         this.router.get(`${this.path}`, passport_1.default.authenticate("google", {
             scope: ["email", "profile"],
         }));
-        this.router.get("/auth/google/callback", passport_1.default.authenticate("google"), this.googleCallbackWithCookieAndToken);
+        this.router.get(`${this.path}/callback`, passport_1.default.authenticate("google"), this.googleCallbackWithCookieAndToken);
         this.router.get("/logout", this.googleLogout);
         this.router.get(`${this.path}/test`, auth_middleware_1.default, this.test);
     }

@@ -7,13 +7,16 @@ const userSchema = new mongoose.Schema({
     default: null,
   },
   email: String,
+  password: String,
   firstName: String,
   lastName: String,
   phoneNumber: String,
-  source: { type: String, required: [true, "Source not specified"] },
-  lastVisited: { type: Date, default: new Date() },
+  source: { type: String },
+  lastVisited: { type: Date, default: new Date() }
 });
 
 const UserModel = mongoose.model<IUser & mongoose.Document>("user", userSchema);
 
 export default UserModel;
+
+//source: { type: String, required: [true, "Source not specified"] },

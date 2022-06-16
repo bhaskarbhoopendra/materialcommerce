@@ -22,6 +22,9 @@ __decorate([
     (0, class_validator_1.IsString)()
 ], UserDTO.prototype, "email", void 0);
 __decorate([
+    (0, class_validator_1.IsString)()
+], UserDTO.prototype, "password", void 0);
+__decorate([
     (0, class_validator_1.IsNumber)()
 ], UserDTO.prototype, "phoneNumber", void 0);
 __decorate([
