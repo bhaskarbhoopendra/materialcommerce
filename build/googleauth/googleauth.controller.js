@@ -28,48 +28,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const passport_1 = __importDefault(require("passport"));
-const user_model_1 = __importDefault(require("../user/user.model"));
 const jwt = __importStar(require("jsonwebtoken"));
-const auth_middleware_1 = __importDefault(require("../middleware/auth.middleware"));
 class GoogleAuthController {
     constructor() {
         this.path = "/auth/google";
         this.router = (0, express_1.Router)();
-        this.test = async (request, response) => {
-            response.send("Hello From Test");
-        };
-        this.googleCallbackWithCookieAndToken = async (request, response) => {
-            var _a, _b, _c, _d, _e, _f;
-            console.log("redirected", request.user);
-            // const profile = { ...request.user };
-            const newUser = {
-                googleId: (_a = request.user) === null || _a === void 0 ? void 0 : _a.id,
-                email: (_b = request.user) === null || _b === void 0 ? void 0 : _b.emails[0].value,
-                firstName: (_c = request.user) === null || _c === void 0 ? void 0 : _c.name.givenName,
-                lastName: (_d = request.user) === null || _d === void 0 ? void 0 : _d.name.familyName,
-                profilePhoto: (_e = request.user) === null || _e === void 0 ? void 0 : _e.photos[0].value,
-                source: "google",
-            };
-            // const googleAuthService = new GoogleAuthService();
-            try {
-                const currentUser = await user_model_1.default.findOne({
-                    googleId: (_f = request.user) === null || _f === void 0 ? void 0 : _f.id,
-                });
-                if (currentUser) {
-                    const tokenData = this.createToken(currentUser);
-                    response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-                    response.send({ tokenData, currentUser });
-                }
-                else {
-                    const user = await user_model_1.default.create(newUser);
-                    const tokenData = this.createToken(user);
-                    response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-                    response.send({ tokenData, user });
-                }
-            }
-            catch (error) {
-                return error;
-            }
+        this.getUser = async (request, response) => {
+            console.log(request.user);
+            response.send(request.user);
         };
         this.googleLogout = async (request, response, next) => {
             request.logout((error) => {
@@ -81,13 +47,12 @@ class GoogleAuthController {
         this.initializeRoutes();
     }
     initializeRoutes() {
-        // this.router.get(`${this.path}`,)
         this.router.get(`${this.path}`, passport_1.default.authenticate("google", {
             scope: ["email", "profile"],
         }));
-        this.router.get(`${this.path}/callback`, passport_1.default.authenticate("google"), this.googleCallbackWithCookieAndToken);
+        this.router.get(`${this.path}/callback`, passport_1.default.authenticate("google"));
         this.router.get("/logout", this.googleLogout);
-        this.router.get(`${this.path}/test`, auth_middleware_1.default, this.test);
+        this.router.get(`/user`, this.getUser);
     }
     createCookie(tokenData) {
         return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
@@ -105,3 +70,36 @@ class GoogleAuthController {
     }
 }
 exports.default = GoogleAuthController;
+// private googleCallbackWithCookieAndToken = async (
+//   request: Request,
+//   response: Response
+// ) => {
+//   console.log("redirected", request.user);
+//   // const profile = { ...request.user };
+//   const newUser = {
+//     googleId: request.user?.id,
+//     email: request.user?.emails[0].value,
+//     firstName: request.user?.name.givenName,
+//     lastName: request.user?.name.familyName,
+//     profilePhoto: request.user?.photos[0].value,
+//     source: "google",
+//   };
+//   // const googleAuthService = new GoogleAuthService();
+//   try {
+//     const currentUser = await UserModel.findOne({
+//       googleId: request.user?.id,
+//     });
+//     if (currentUser) {
+//       const tokenData = this.createToken(currentUser);
+//       response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+//       response.send({ tokenData, currentUser });
+//     } else {
+//       const user: IUser = await UserModel.create(newUser);
+//       const tokenData = this.createToken(user);
+//       response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+//       response.send({ tokenData, user });
+//     }
+//   } catch (error) {
+//     return error;
+//   }
+// };

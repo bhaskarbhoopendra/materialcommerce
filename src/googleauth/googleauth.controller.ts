@@ -3,10 +3,10 @@ import passport from "passport";
 import Controller from "../interfaces/controller.interface";
 import UserModel from "../user/user.model";
 import * as jwt from "jsonwebtoken";
-import TokenData from "../interfaces/tokenData.interface";
+import TokenData from "../interfaces/takenData.interface";
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
 import IUser from "../user/user.interface";
-import authMiddleware from "../middleware/auth.middleware";
+
 class GoogleAuthController implements Controller {
   path = "/auth/google";
   router = Router();
@@ -15,7 +15,6 @@ class GoogleAuthController implements Controller {
   }
 
   private initializeRoutes() {
-    // this.router.get(`${this.path}`,)
     this.router.get(
       `${this.path}`,
       passport.authenticate("google", {
@@ -23,54 +22,14 @@ class GoogleAuthController implements Controller {
       })
     );
 
-    this.router.get(
-      `${this.path}/callback`,
-      passport.authenticate("google"),
-      this.googleCallbackWithCookieAndToken
-    );
-
+    this.router.get(`${this.path}/callback`, passport.authenticate("google"));
     this.router.get("/logout", this.googleLogout);
-
-    this.router.get(`${this.path}/test`, authMiddleware, this.test);
+    this.router.get(`/user`, this.getUser);
   }
 
-  private test = async (request: Request, response: Response) => {
-    response.send("Hello From Test");
-  };
-
-  private googleCallbackWithCookieAndToken = async (
-    request: Request,
-    response: Response
-  ) => {
-    console.log("redirected", request.user);
-    // const profile = { ...request.user };
-    const newUser = {
-      googleId: request.user?.id,
-      email: request.user?.emails[0].value,
-      firstName: request.user?.name.givenName,
-      lastName: request.user?.name.familyName,
-      profilePhoto: request.user?.photos[0].value,
-      source: "google",
-    };
-
-    // const googleAuthService = new GoogleAuthService();
-    try {
-      const currentUser = await UserModel.findOne({
-        googleId: request.user?.id,
-      });
-      if (currentUser) {
-        const tokenData = this.createToken(currentUser);
-        response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-        response.send({ tokenData, currentUser });
-      } else {
-        const user: IUser = await UserModel.create(newUser);
-        const tokenData = this.createToken(user);
-        response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-        response.send({ tokenData, user });
-      }
-    } catch (error) {
-      return error;
-    }
+  private getUser = async (request: Request, response: Response) => {
+    console.log(request.user);
+    response.send(request.user);
   };
 
   private googleLogout = async (
@@ -101,3 +60,38 @@ class GoogleAuthController implements Controller {
 }
 
 export default GoogleAuthController;
+
+// private googleCallbackWithCookieAndToken = async (
+//   request: Request,
+//   response: Response
+// ) => {
+//   console.log("redirected", request.user);
+//   // const profile = { ...request.user };
+//   const newUser = {
+//     googleId: request.user?.id,
+//     email: request.user?.emails[0].value,
+//     firstName: request.user?.name.givenName,
+//     lastName: request.user?.name.familyName,
+//     profilePhoto: request.user?.photos[0].value,
+//     source: "google",
+//   };
+
+//   // const googleAuthService = new GoogleAuthService();
+//   try {
+//     const currentUser = await UserModel.findOne({
+//       googleId: request.user?.id,
+//     });
+//     if (currentUser) {
+//       const tokenData = this.createToken(currentUser);
+//       response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+//       response.send({ tokenData, currentUser });
+//     } else {
+//       const user: IUser = await UserModel.create(newUser);
+//       const tokenData = this.createToken(user);
+//       response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+//       response.send({ tokenData, user });
+//     }
+//   } catch (error) {
+//     return error;
+//   }
+// };
