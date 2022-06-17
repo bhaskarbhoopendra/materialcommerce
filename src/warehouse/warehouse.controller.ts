@@ -3,12 +3,12 @@ import Controller from "../interfaces/controller.interface";
 import adminMiddleware from "../middleware/admin.middleware";
 import WarehouseDTo from "./warehouse.dto";
 import warehouseModel from "./warehouse.model";
-import WarehouseRepository from "./warehouse.repository";
+import WarehouseDbManager from "./warehouse.dbmanager";
 
 class WarehouseController implements Controller {
     public path = "/warehouse"
     public router = Router()
-    public warehouseRepository = new WarehouseRepository()
+    public warehouseDbManager = new WarehouseDbManager()
     public warehouseModel = warehouseModel
 
     constructor() {
@@ -39,7 +39,7 @@ class WarehouseController implements Controller {
             const warehouseId: string = request.params.warehouseId;
             if (warehouseId == undefined) response.send("Id not found")
             const updateData: WarehouseDTo = request.body
-            const updatedWarehouse = await this.warehouseRepository.warehouseByIDAndUpdate(warehouseId,updateData)
+            const updatedWarehouse = await this.warehouseDbManager.warehouseByIDAndUpdate(warehouseId,updateData)
             response.send(updatedWarehouse)
         } catch (error) {
             return error
@@ -48,7 +48,7 @@ class WarehouseController implements Controller {
 
     private getAllWarehouse = async (request: Request, response: Response) => {
         try {
-            const warehouse = await this.warehouseRepository.getAllWarehouse()
+            const warehouse = await this.warehouseDbManager.getAllWarehouse()
             if (!warehouse) response.send("No Warehouse Found")
             response.send(warehouse)
         } catch (error) {
@@ -60,7 +60,7 @@ class WarehouseController implements Controller {
         try {
             const warehouseId: string = request.params.warehouseId
             if (!warehouseId) response.send("Id not found")
-            await this.warehouseRepository.warehouseByIDAndDelete(warehouseId)
+            await this.warehouseDbManager.warehouseByIDAndDelete(warehouseId)
             response.send("Deleted")
         } catch (error) {
             return error

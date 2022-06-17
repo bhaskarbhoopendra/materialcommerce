@@ -1,7 +1,7 @@
 import { ParamsDictionary } from "express-serve-static-core";
 import Warehouse from "./warehouse.model";
 
-class WarehouseRepository {
+class WarehouseDbManager {
   public warehouse = Warehouse;
   public id: string;
   public data: any;
@@ -29,4 +29,4 @@ class WarehouseRepository {
   };
 }
 
-export default WarehouseRepository;
+export default WarehouseDbManager;
