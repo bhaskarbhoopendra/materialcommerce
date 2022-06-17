@@ -61,8 +61,7 @@ class AuthenticationService {
             const user = await this.user.findOne({ email });
             if (!user)
                 throw new wrongCredentialsException_1.default();
-            const passwordHash = user.password;
-            const comparePasswords = bcrypt.compare(password, passwordHash);
+            const comparePasswords = bcrypt.compare(password, user.get("password", null, { getters: false }));
             if (!comparePasswords)
                 throw new wrongCredentialsException_1.default();
             const tokenData = this.createToken(user);
