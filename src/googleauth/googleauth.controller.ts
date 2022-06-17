@@ -1,7 +1,6 @@
 import { Request, Router, Response, NextFunction } from "express";
 import passport from "passport";
 import Controller from "../interfaces/controller.interface";
-import UserModel from "../user/user.model";
 import * as jwt from "jsonwebtoken";
 import TokenData from "../interfaces/takenData.interface";
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
