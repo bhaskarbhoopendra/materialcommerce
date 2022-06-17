@@ -38,11 +38,17 @@ class GoogleAuthController {
             response.send(request.user);
         };
         this.googleLogout = async (request, response, next) => {
-            request.logout((error) => {
-                if (error)
-                    return next(error);
-                response.send("LoggedOUt");
-            });
+            // request.logout((error) => {
+            //   if (error) return next(error);
+            //   response.send("LoggedOUt");
+            // });
+            if (request.user) {
+                request.logout((error) => {
+                    if (error)
+                        return next(error);
+                    response.send("LoggedOUt");
+                });
+            }
         };
         this.initializeRoutes();
     }

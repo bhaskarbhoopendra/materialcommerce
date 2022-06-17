@@ -37,10 +37,16 @@ class GoogleAuthController implements Controller {
     response: Response,
     next: NextFunction
   ) => {
-    request.logout((error) => {
-      if (error) return next(error);
-      response.send("LoggedOUt");
-    });
+    // request.logout((error) => {
+    //   if (error) return next(error);
+    //   response.send("LoggedOUt");
+    // });
+    if (request.user) {
+      request.logout((error) => {
+        if (error) return next(error);
+        response.send("LoggedOUt");
+      });
+    }
   };
 
   public createCookie(tokenData: TokenData) {
