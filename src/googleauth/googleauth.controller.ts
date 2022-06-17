@@ -22,10 +22,18 @@ class GoogleAuthController implements Controller {
       })
     );
 
-    this.router.get(`${this.path}/callback`, passport.authenticate("google"));
+    this.router.get(
+      `${this.path}/callback`,
+      passport.authenticate("google"),
+      this.googleCallback
+    );
     this.router.get("/logout", this.googleLogout);
     this.router.get(`/user`, this.getUser);
   }
+
+  private googleCallback = async (request: Request, response: Response) => {
+    response.redirect("/http://localhost:3000/googlesuccess");
+  };
 
   private getUser = async (request: Request, response: Response) => {
     console.log(request.user);

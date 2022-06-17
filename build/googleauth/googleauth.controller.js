@@ -33,6 +33,9 @@ class GoogleAuthController {
     constructor() {
         this.path = "/auth/google";
         this.router = (0, express_1.Router)();
+        this.googleCallback = async (request, response) => {
+            response.redirect("/http://localhost:3000/googlesuccess");
+        };
         this.getUser = async (request, response) => {
             console.log(request.user);
             response.send(request.user);
@@ -56,7 +59,7 @@ class GoogleAuthController {
         this.router.get(`${this.path}`, passport_1.default.authenticate("google", {
             scope: ["email", "profile"],
         }));
-        this.router.get(`${this.path}/callback`, passport_1.default.authenticate("google"));
+        this.router.get(`${this.path}/callback`, passport_1.default.authenticate("google"), this.googleCallback);
         this.router.get("/logout", this.googleLogout);
         this.router.get(`/user`, this.getUser);
     }
