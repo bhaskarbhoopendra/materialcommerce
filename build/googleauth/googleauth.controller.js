@@ -34,17 +34,13 @@ class GoogleAuthController {
         this.path = "/auth/google";
         this.router = (0, express_1.Router)();
         this.googleCallback = async (request, response) => {
-            response.redirect("/http://localhost:3000/googlesuccess");
+            response.redirect("http://localhost:3000/googlesuccess");
         };
         this.getUser = async (request, response) => {
             console.log(request.user);
             response.send(request.user);
         };
         this.googleLogout = async (request, response, next) => {
-            // request.logout((error) => {
-            //   if (error) return next(error);
-            //   response.send("LoggedOUt");
-            // });
             if (request.user) {
                 request.logout((error) => {
                     if (error)
