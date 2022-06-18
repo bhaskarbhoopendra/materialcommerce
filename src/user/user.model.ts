@@ -15,6 +15,15 @@ const userSchema = new mongoose.Schema({
   lastVisited: { type: Date, default: new Date() }
 });
 
+export const addressSchema = new mongoose.Schema({
+  city: String,
+  country: String,
+  street: String,
+  pincode: Number,
+  phoneNumber: Number,
+})
+
+
 const UserModel = mongoose.model<IUser & mongoose.Document>("user", userSchema);
 
 export default UserModel;
