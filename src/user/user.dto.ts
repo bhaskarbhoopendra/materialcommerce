@@ -1,26 +1,30 @@
 import { IsNumber, IsString } from "class-validator";
 
 class UserDTO {
-  @IsString()
-  id!: string;
 
   @IsString()
-  firstName?: string;
+  id?: string;
 
   @IsString()
-  lastName?: string;
+  firstName: string;
 
   @IsString()
-  email!: string;
+  lastName: string;
+
+  @IsString()
+  email: string;
+
+  @IsString()
+  password: string;
 
   @IsNumber()
-  phoneNumber?: number;
+  phoneNumber: number;
 
   @IsString()
-  source!: string;
+  source: string;
 
   @IsString()
-  lastVisited!: string;
+  lastVisited: string;
 }
 
 export default UserDTO;

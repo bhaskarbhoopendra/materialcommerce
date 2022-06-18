@@ -6,13 +6,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const IsString_1 = require("class-validator/types/decorator/typechecker/IsString");
-class LoginDto {
+const class_validator_1 = require("class-validator");
+class PincodeTypeDto {
 }
 __decorate([
-    (0, IsString_1.IsString)()
-], LoginDto.prototype, "email", void 0);
+    (0, class_validator_1.IsString)()
+], PincodeTypeDto.prototype, "pincodeTypeName", void 0);
 __decorate([
-    (0, IsString_1.IsString)()
-], LoginDto.prototype, "password", void 0);
-exports.default = LoginDto;
+    (0, class_validator_1.IsBoolean)()
+], PincodeTypeDto.prototype, "isSpecialState", void 0);
+exports.default = PincodeTypeDto;

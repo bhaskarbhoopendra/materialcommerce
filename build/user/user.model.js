@@ -11,11 +11,12 @@ const userSchema = new mongoose_1.default.Schema({
         default: null,
     },
     email: String,
+    password: String,
     firstName: String,
     lastName: String,
     phoneNumber: String,
-    source: { type: String, required: [true, "Source not specified"] },
-    lastVisited: { type: Date, default: new Date() },
+    source: { type: String },
+    lastVisited: { type: Date, default: new Date() }
 });
 exports.addressSchema = new mongoose_1.default.Schema({
     city: String,
@@ -26,3 +27,4 @@ exports.addressSchema = new mongoose_1.default.Schema({
 });
 const UserModel = mongoose_1.default.model("user", userSchema);
 exports.default = UserModel;
+//source: { type: String, required: [true, "Source not specified"] },
