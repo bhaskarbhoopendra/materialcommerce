@@ -12,7 +12,7 @@ class AuthenticationService {
   user = UserModel;
   userDbManager = new UserDbManager();
 
-  constructor() {}
+  constructor() { }
 
   register = async (userData: any): Promise<any> => {
     try {
@@ -44,11 +44,11 @@ class AuthenticationService {
     const email: string = userCred.email;
     const password: string = userCred.password;
 
-    const user: IUser | null = await this.user.findOne({ email }).lean();
+    const user = await this.user.findOne({ email });
     if (!user) throw new WrongCredentialsException();
 
-    const passwordHash = user.password;
-    const comparePasswords = bcrypt.compare(password, passwordHash);
+    const comparePasswords = await bcrypt.compare(password, user.get("password", null, { getters: false }));
+
     if (!comparePasswords) throw new WrongCredentialsException();
 
     const tokenData = this.createToken(user);
