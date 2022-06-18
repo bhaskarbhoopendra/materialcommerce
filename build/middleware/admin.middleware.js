@@ -55,8 +55,6 @@ async function adminMiddleware(request, response, next) {
     }
 }
 exports.default = adminMiddleware;
-<<<<<<< HEAD
-=======
 // export function isAdmin(
 //   request: RequestWithUser | any,
 //   response: Response,
@@ -66,4 +64,3 @@ exports.default = adminMiddleware;
 //     next();
 //   }
 // }
->>>>>>> 135794992db1dba16263e7946e01adcb0c41a84c

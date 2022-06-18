@@ -8,12 +8,6 @@ const adminSchema = new mongoose_1.default.Schema({
     email: String,
     password: String,
     isAdmin: Boolean,
-    vendorRequests: [
-        {
-            type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: "Vendor",
-        },
-    ],
 });
 const AdminModel = mongoose_1.default.model("Admin", adminSchema);
 exports.default = AdminModel;

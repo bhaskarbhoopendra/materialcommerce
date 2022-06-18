@@ -58,10 +58,10 @@ class AuthenticationService {
         this.login = async (userCred) => {
             const email = userCred.email;
             const password = userCred.password;
-            const user = await this.user.findOne({ email }).lean();
+            const user = await this.user.findOne({ email });
             if (!user)
                 throw new wrongCredentialsException_1.default();
-            const comparePasswords = bcrypt.compare(password, user.get("password", null, { getters: false }));
+            const comparePasswords = await bcrypt.compare(password, user.get("password", null, { getters: false }));
             if (!comparePasswords)
                 throw new wrongCredentialsException_1.default();
             const tokenData = this.createToken(user);
