@@ -38,3 +38,13 @@ async function adminMiddleware(
 }
 
 export default adminMiddleware;
+
+// export function isAdmin(
+//   request: RequestWithUser | any,
+//   response: Response,
+//   next: NextFunction
+// ) {
+//   if (request.user.role == "ADMIN") {
+//     next();
+//   }
+// }

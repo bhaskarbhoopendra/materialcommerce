@@ -48,7 +48,7 @@ class AuthenticationService {
                 const cookie = this.createCookie(tokenData);
                 return {
                     user,
-                    cookie
+                    cookie,
                 };
             }
             catch (error) {
@@ -58,7 +58,7 @@ class AuthenticationService {
         this.login = async (userCred) => {
             const email = userCred.email;
             const password = userCred.password;
-            const user = await this.user.findOne({ email });
+            const user = await this.user.findOne({ email }).lean();
             if (!user)
                 throw new wrongCredentialsException_1.default();
             const comparePasswords = bcrypt.compare(password, user.get("password", null, { getters: false }));
@@ -72,11 +72,11 @@ class AuthenticationService {
             const expiresIn = 60 * 60;
             const { JWT_SECRET } = process.env;
             const dataStoredInToken = {
-                _id: user._id
+                _id: user._id,
             };
             return {
                 expiresIn,
-                token: jwt.sign(dataStoredInToken, `${JWT_SECRET}`, { expiresIn })
+                token: jwt.sign(dataStoredInToken, `${JWT_SECRET}`, { expiresIn }),
             };
         };
         this.createCookie = (tokenData) => {
