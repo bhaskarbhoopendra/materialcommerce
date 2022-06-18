@@ -6,10 +6,6 @@ const warehouseSchema = new mongoose.Schema({
   address: addressSchema,
   warehouseName: String,
   isVerifiedWarehouse: { enum: ["confirmed", "pending"] },
-  vendor: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Vendor",
-  },
 });
 
 const Warehouse = mongoose.model<Iwarehouse>("Warehouse", warehouseSchema);
