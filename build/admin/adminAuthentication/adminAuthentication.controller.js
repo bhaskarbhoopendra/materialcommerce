@@ -71,26 +71,10 @@ class AdminAuthenticationController {
             catch (error) {
                 return error;
             }
-            const logInData = request.body;
-            const admin = await this.admin.findOne({ email: logInData.email });
-            if (admin) {
-                const isPasswordMatching = await bcryptjs_1.default.compare(logInData.password, admin.get("password", null, { getters: false }));
-                if (isPasswordMatching) {
-                    const tokenData = this.createToken(admin);
-                    response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-                    response.send({ tokenData, admin });
-                }
-                else {
-                    next(new wrongCredentialsException_1.default());
-                }
-            }
-            else {
-                next(new wrongCredentialsException_1.default());
-            }
         };
         this.adminLogout = (request, response) => {
             try {
-                response.setHeader("Set-Cookie", ['Authorization=,Max-Age=0']);
+                response.setHeader("Set-Cookie", ["Authorization=,Max-Age=0"]);
                 response.send("Logged Out");
             }
             catch (error) {
