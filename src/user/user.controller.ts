@@ -1,8 +1,7 @@
-import { Router } from "express";
-import Controller from "../interfaces/controller.interface";
-
+import { Router } from 'express';
+import Controller from '../interfaces/controller.interface';
 class UserController implements Controller {
-  public path = "/user";
+  public path = '/user';
   public router: Router = Router();
 }
 
