@@ -41,7 +41,7 @@ class App {
     this.app.use(express.json());
     this.app.use(
       cors({
-        origin: "http://localhost:3000",
+        origin: "https://jellyfish-app-pewk8.ondigitalocean.app",
         credentials: true,
       })
     );

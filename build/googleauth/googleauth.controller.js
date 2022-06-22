@@ -38,7 +38,12 @@ class GoogleAuthController {
         };
         this.getUser = async (request, response) => {
             console.log(request.user);
-            response.send(request.user);
+            if (request.user) {
+                response.send(request.user);
+            }
+            else {
+                response.send("No user");
+            }
         };
         this.googleLogout = async (request, response, next) => {
             if (request.user) {
