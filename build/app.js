@@ -55,7 +55,10 @@ class App {
     }
     initializeMiddleware() {
         this.app.use(express_1.default.json());
-        this.app.use((0, cors_1.default)());
+        this.app.use((0, cors_1.default)({
+            origin: "*",
+            credentials: true,
+        }));
         this.app.use((0, cookie_parser_1.default)());
         this.app.use((0, express_session_1.default)({
             secret: "melody hensley is my spirit animal",
