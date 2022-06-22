@@ -19,10 +19,6 @@ class WarehouseDbManager {
         this.warehouseByIDAndDelete = async (id) => {
             return await this.warehouse.findByIdAndDelete(id);
         };
-        this.getAllWarehouse();
-        this.warehouseByID(this.id);
-        this.warehouseByIDAndUpdate(this.id, this.data);
-        this.warehouseByIDAndDelete(this.id);
     }
 }
 exports.default = WarehouseDbManager;

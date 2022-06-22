@@ -3,14 +3,7 @@ import Warehouse from "./warehouse.model";
 
 class WarehouseDbManager {
   public warehouse = Warehouse;
-  public id: string;
-  public data: any;
-  constructor() {
-    this.getAllWarehouse();
-    this.warehouseByID(this.id);
-    this.warehouseByIDAndUpdate(this.id, this.data);
-    this.warehouseByIDAndDelete(this.id);
-  }
+  constructor() {}
 
   public getAllWarehouse = async () => {
     return await this.warehouse.find({});

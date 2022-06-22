@@ -25,13 +25,6 @@ class VendorDbManager {
         this.deleteVendorById = async (id) => {
             return await this.vendor.findByIdAndDelete(id);
         };
-        this.createVendor(this.data);
-        this.findVendorById(this.id);
-        this.findAllVendors();
-        this.findVendorByEmail(this.email);
-        this.updateVendorById(this.id, this.data);
-        this.deleteVendorById(this.id);
     }
-    ;
 }
 exports.default = VendorDbManager;
