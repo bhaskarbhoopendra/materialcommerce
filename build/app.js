@@ -54,19 +54,16 @@ class App {
         });
     }
     initializeMiddleware() {
+        const { SESSION } = process.env;
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)({
             origin: "http://localhost:3000",
             methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
             credentials: true,
         }));
-        this.app.use((req, res, next) => {
-            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-            next();
-        });
         this.app.use((0, cookie_parser_1.default)());
         this.app.use((0, express_session_1.default)({
-            secret: "melody hensley is my spirit animal",
+            secret: `${SESSION}`,
             resave: true,
             saveUninitialized: true,
         }));

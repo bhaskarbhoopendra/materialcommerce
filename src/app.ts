@@ -38,6 +38,7 @@ class App {
   }
 
   private initializeMiddleware() {
+    const { SESSION } = process.env;
     this.app.use(express.json());
     this.app.use(
       cors({
@@ -46,17 +47,10 @@ class App {
         credentials: true,
       })
     );
-    this.app.use((req, res, next) => {
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-      );
-      next();
-    });
     this.app.use(cookieParser());
     this.app.use(
       session({
-        secret: "melody hensley is my spirit animal",
+        secret: `${SESSION}`,
         resave: true,
         saveUninitialized: true,
       })
