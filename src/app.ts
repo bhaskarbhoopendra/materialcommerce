@@ -1,16 +1,16 @@
-import express, { NextFunction, Request, Response } from "express";
-import mongoose from "mongoose";
-import cookieParser from "cookie-parser";
-import errorHandler from "./middleware/error.middleware";
-import Controller from "./interfaces/controller.interface";
-import morgan from "morgan";
-import clc from "cli-color";
-import cors from "cors";
-import session from "express-session";
-import passport from "passport";
-import "./config/google";
-import "./config/passport";
-import flash from "express-flash";
+import express, { NextFunction, Request, Response } from 'express';
+import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
+import errorHandler from './middleware/error.middleware';
+import Controller from './interfaces/controller.interface';
+import morgan from 'morgan';
+import clc from 'cli-color';
+import cors from 'cors';
+import session from 'express-session';
+import passport from 'passport';
+import './config/google';
+import './config/passport';
+import flash from 'express-flash';
 
 class App {
   public app = express.application;
@@ -33,7 +33,7 @@ class App {
 
   private initializeController(controllers: Controller[]) {
     controllers.forEach((controller) => {
-      this.app.use("/", controller.router);
+      this.app.use('/', controller.router);
     });
   }
 
@@ -41,20 +41,20 @@ class App {
     this.app.use(express.json());
     this.app.use(
       cors({
-        origin: "http://localhost:3000",
+        origin: '*',
         credentials: true,
       })
     );
     this.app.use(cookieParser());
     this.app.use(
       session({
-        secret: "melody hensley is my spirit animal",
+        secret: 'melody hensley is my spirit animal',
         resave: true,
         saveUninitialized: true,
       })
     );
     this.app.use(
-      morgan(":method :url :status :res[content-length] - :response-time ms")
+      morgan(':method :url :status :res[content-length] - :response-time ms')
     );
     this.app.use(flash());
     this.app.use(express.static(`${__dirname}/public`));
@@ -79,7 +79,7 @@ class App {
     await mongoose
       .connect(`${DATABASE_URI}`)
       .then(() => {
-        console.log(clc.green.italic("Connected to db"));
+        console.log(clc.green.italic('Connected to db'));
       })
       .catch((err) => {
         console.log(err);

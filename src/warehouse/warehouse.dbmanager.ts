@@ -1,10 +1,8 @@
-import { ParamsDictionary } from "express-serve-static-core";
-import Warehouse from "./warehouse.model";
+import { ParamsDictionary } from 'express-serve-static-core';
+import Warehouse from './warehouse.model';
 
 class WarehouseDbManager {
   public warehouse = Warehouse;
-  public id: string;
-  public data: any;
   constructor() {}
 
   public getAllWarehouse = async () => {
