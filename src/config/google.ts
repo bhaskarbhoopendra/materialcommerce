@@ -9,8 +9,8 @@ passport.use(
   new googleStrategy(
     {
       callbackURL: process.env.CALLBACK_URL,
-      clientID: process.env.GOOGLE_CLIENT_ID_NEW,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET_NEW,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
     async (
       accessToken: string,
