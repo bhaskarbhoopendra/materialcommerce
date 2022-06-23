@@ -23,7 +23,7 @@ class GoogleAuthController implements Controller {
 
     this.router.get(
       `${this.path}/callback`,
-      passport.authenticate("google", { session: false }),
+      passport.authenticate("google", { session: true }),
       this.googleCallback
     );
     this.router.get("/logout", this.googleLogout);
