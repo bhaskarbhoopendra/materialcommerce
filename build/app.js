@@ -61,7 +61,6 @@ class App {
             methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
             credentials: true,
         }));
-        this.app.set("trust proxy", true);
         // this.app.use((req, res, next) => {
         //   res.header(
         //     "Access-Control-Allow-Headers",

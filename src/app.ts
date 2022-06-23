@@ -47,7 +47,6 @@ class App {
         credentials: true,
       })
     );
-    this.app.set("trust proxy", true);
     // this.app.use((req, res, next) => {
     //   res.header(
     //     "Access-Control-Allow-Headers",
