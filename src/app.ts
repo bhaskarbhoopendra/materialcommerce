@@ -42,7 +42,6 @@ class App {
     this.app.use(express.json());
     this.app.use(
       cors({
-        // origin: "https://orca-app-hlc5k.ondigitalocean.app",
         origin: "http://localhost:3000",
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         credentials: true,
@@ -54,7 +53,6 @@ class App {
         secret: `${SESSION}`,
         resave: true,
         saveUninitialized: true,
-        cookie: { secure: true },
       })
     );
     this.app.use(
@@ -80,7 +78,7 @@ class App {
     // }
 
     const { DATABASE_URI } = process.env;
-    mongoose
+    await mongoose
       .connect(`${DATABASE_URI}`)
       .then(() => {
         console.log(clc.green.italic("Connected to db"));

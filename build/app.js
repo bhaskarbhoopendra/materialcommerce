@@ -28,7 +28,7 @@ class App {
             //   console.log("Failed to connect To DB", error);
             // }
             const { DATABASE_URI } = process.env;
-            mongoose_1.default
+            await mongoose_1.default
                 .connect(`${DATABASE_URI}`)
                 .then(() => {
                 console.log(cli_color_1.default.green.italic("Connected to db"));
@@ -57,7 +57,6 @@ class App {
         const { SESSION } = process.env;
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)({
-            // origin: "https://orca-app-hlc5k.ondigitalocean.app",
             origin: "http://localhost:3000",
             methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
             credentials: true,
@@ -67,7 +66,6 @@ class App {
             secret: `${SESSION}`,
             resave: true,
             saveUninitialized: true,
-            cookie: { secure: true },
         }));
         this.app.use((0, morgan_1.default)(":method :url :status :res[content-length] - :response-time ms"));
         this.app.use((0, express_flash_1.default)());
