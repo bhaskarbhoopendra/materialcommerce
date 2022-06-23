@@ -47,6 +47,12 @@ class App {
         credentials: true,
       })
     );
+    this.app.use((req, res, next) => {
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+      );
+    });
     this.app.use(cookieParser());
     this.app.use(
       session({
