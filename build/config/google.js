@@ -10,8 +10,8 @@ const user_model_1 = __importDefault(require("../user/user.model"));
 const googleStrategy = passport_google_oauth20_1.default.Strategy;
 passport_1.default.use(new googleStrategy({
     callbackURL: process.env.CALLBACK_URL,
-    clientID: process.env.GOOGLE_CLIENT_ID_NEW,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET_NEW,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
 }, async (accessToken, refreshToken, profile, done) => {
     const newUser = {
         googleId: profile.id,

@@ -42,12 +42,18 @@ class App {
     this.app.use(express.json());
     this.app.use(
       cors({
-        origin: 'https://orca-app-hlc5k.ondigitalocean.app',
-        // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        origin: 'http://localhost:3000',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true,
       })
     );
-    this.app.set('trust proxy', 1);
+    this.app.use((req, res, next) => {
+      res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+      );
+      res.header('Access-Control-Allow-Origin', '*');
+    });
     this.app.use(cookieParser());
     this.app.use(
       session({
