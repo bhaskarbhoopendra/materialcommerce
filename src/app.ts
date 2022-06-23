@@ -60,7 +60,11 @@ class App {
         secret: `${SESSION}`,
         resave: false,
         saveUninitialized: true,
-        cookie: { httpOnly: false, secure: false },
+        cookie: {
+          httpOnly: true,
+          secure: false,
+          domain: "http://localhost:3000",
+        },
       })
     );
     this.app.use(
