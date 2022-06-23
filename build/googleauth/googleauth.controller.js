@@ -34,7 +34,7 @@ class GoogleAuthController {
         this.path = "/auth/google";
         this.router = (0, express_1.Router)();
         this.googleCallback = async (request, response) => {
-            response.redirect("http://localhost:3000/googlesuccess");
+            response.redirect("https://orca-app-hlc5k.ondigitalocean.app/googlesuccess");
         };
         this.getUser = async (request, response) => {
             console.log(request.user);
@@ -60,7 +60,7 @@ class GoogleAuthController {
         this.router.get(`${this.path}`, passport_1.default.authenticate("google", {
             scope: ["email", "profile"],
         }));
-        this.router.get(`${this.path}/callback`, passport_1.default.authenticate("google"), this.googleCallback);
+        this.router.get(`${this.path}/callback`, passport_1.default.authenticate("google", { session: true }), this.googleCallback);
         this.router.get("/logout", this.googleLogout);
         this.router.get(`/user`, this.getUser);
     }

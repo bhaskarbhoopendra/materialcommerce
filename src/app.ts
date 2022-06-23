@@ -8,8 +8,8 @@ import clc from 'cli-color';
 import cors from 'cors';
 import session from 'express-session';
 import passport from 'passport';
-import './config/google';
 import './config/passport';
+import './config/google';
 import flash from 'express-flash';
 
 class App {
@@ -38,19 +38,27 @@ class App {
   }
 
   private initializeMiddleware() {
+    const { SESSION } = process.env;
     this.app.use(express.json());
     this.app.use(
       cors({
-        origin: '*',
+        origin: 'https://orca-app-hlc5k.ondigitalocean.app',
+        // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         credentials: true,
       })
     );
+    this.app.set('trust proxy', 1);
     this.app.use(cookieParser());
     this.app.use(
       session({
-        secret: 'melody hensley is my spirit animal',
+        secret: `${SESSION}`,
         resave: true,
         saveUninitialized: true,
+        cookie: {
+          sameSite: 'none',
+          secure: true,
+          maxAge: 1000 * 60 * 60 * 24 * 7, // One Week
+        },
       })
     );
     this.app.use(
