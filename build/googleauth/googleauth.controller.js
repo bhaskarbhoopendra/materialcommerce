@@ -34,7 +34,7 @@ class GoogleAuthController {
         this.path = "/auth/google";
         this.router = (0, express_1.Router)();
         this.googleCallback = async (request, response) => {
-            response.redirect("https://orca-app-hlc5k.ondigitalocean.app");
+            response.redirect("http://localhost:3000/googlesuccess");
         };
         this.getUser = async (request, response) => {
             console.log(request.user);

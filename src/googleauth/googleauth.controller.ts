@@ -31,7 +31,7 @@ class GoogleAuthController implements Controller {
   }
 
   private googleCallback = async (request: Request, response: Response) => {
-    response.redirect("https://orca-app-hlc5k.ondigitalocean.app");
+    response.redirect("http://localhost:3000/googlesuccess");
   };
 
   private getUser = async (request: Request, response: Response) => {
