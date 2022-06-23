@@ -42,7 +42,7 @@ class App {
     this.app.use(express.json());
     this.app.use(
       cors({
-        origin: "https://orca-app-hlc5k.ondigitalocean.app",
+        origin: "http://localhost:3000",
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         credentials: true,
       })
@@ -58,9 +58,9 @@ class App {
     this.app.use(
       session({
         secret: `${SESSION}`,
-        resave: false,
+        resave: true,
         saveUninitialized: true,
-        cookie: { secure: true },
+        cookie: { httpOnly: true, secure: true },
       })
     );
     this.app.use(

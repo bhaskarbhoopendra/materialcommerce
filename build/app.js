@@ -57,7 +57,7 @@ class App {
         const { SESSION } = process.env;
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)({
-            origin: "https://orca-app-hlc5k.ondigitalocean.app",
+            origin: "http://localhost:3000",
             methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
             credentials: true,
         }));
@@ -71,9 +71,9 @@ class App {
         this.app.use((0, cookie_parser_1.default)());
         this.app.use((0, express_session_1.default)({
             secret: `${SESSION}`,
-            resave: false,
+            resave: true,
             saveUninitialized: true,
-            cookie: { secure: true },
+            cookie: { httpOnly: true, secure: true },
         }));
         this.app.use((0, morgan_1.default)(":method :url :status :res[content-length] - :response-time ms"));
         this.app.use((0, express_flash_1.default)());
