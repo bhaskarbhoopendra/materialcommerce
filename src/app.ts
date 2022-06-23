@@ -8,8 +8,8 @@ import clc from "cli-color";
 import cors from "cors";
 import session from "express-session";
 import passport from "passport";
-import "./config/google";
 import "./config/passport";
+import "./config/google";
 import flash from "express-flash";
 
 class App {
