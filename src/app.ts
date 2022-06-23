@@ -52,6 +52,7 @@ class App {
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept, Authorization"
       );
+      next();
     });
     this.app.use(cookieParser());
     this.app.use(
