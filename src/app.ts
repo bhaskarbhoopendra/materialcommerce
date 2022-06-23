@@ -43,7 +43,7 @@ class App {
     this.app.use(
       cors({
         origin: "https://orca-app-hlc5k.ondigitalocean.app",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         credentials: true,
       })
     );

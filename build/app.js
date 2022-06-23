@@ -58,7 +58,7 @@ class App {
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)({
             origin: "https://orca-app-hlc5k.ondigitalocean.app",
-            methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+            // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
             credentials: true,
         }));
         this.app.set("trust proxy", 1);
