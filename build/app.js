@@ -61,6 +61,7 @@ class App {
             methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
             credentials: true,
         }));
+        this.app.set("trust proxy", 1);
         this.app.use((0, cookie_parser_1.default)());
         this.app.use((0, express_session_1.default)({
             secret: `${SESSION}`,
