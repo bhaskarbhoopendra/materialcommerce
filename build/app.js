@@ -70,6 +70,7 @@ class App {
             secret: `${SESSION}`,
             resave: true,
             saveUninitialized: true,
+            cookie: { httpOnly: false, secure: false },
         }));
         this.app.use((0, morgan_1.default)(":method :url :status :res[content-length] - :response-time ms"));
         this.app.use((0, express_flash_1.default)());
