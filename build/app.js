@@ -71,9 +71,9 @@ class App {
         this.app.use((0, cookie_parser_1.default)());
         this.app.use((0, express_session_1.default)({
             secret: `${SESSION}`,
-            resave: true,
+            resave: false,
             saveUninitialized: true,
-            cookie: { httpOnly: true },
+            cookie: { httpOnly: false, secure: false },
         }));
         this.app.use((0, morgan_1.default)(":method :url :status :res[content-length] - :response-time ms"));
         this.app.use((0, express_flash_1.default)());

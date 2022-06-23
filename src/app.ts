@@ -58,9 +58,9 @@ class App {
     this.app.use(
       session({
         secret: `${SESSION}`,
-        resave: true,
+        resave: false,
         saveUninitialized: true,
-        cookie: { httpOnly: true },
+        cookie: { httpOnly: false, secure: false },
       })
     );
     this.app.use(
