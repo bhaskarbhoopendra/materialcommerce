@@ -61,6 +61,7 @@ class App {
             methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
             credentials: true,
         }));
+        this.app.set("trust proxy", true);
         // this.app.use((req, res, next) => {
         //   res.header(
         //     "Access-Control-Allow-Headers",
@@ -76,7 +77,6 @@ class App {
             cookie: {
                 httpOnly: true,
                 secure: false,
-                domain: "http://localhost:3000",
             },
         }));
         this.app.use((0, morgan_1.default)(":method :url :status :res[content-length] - :response-time ms"));

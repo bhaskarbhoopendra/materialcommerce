@@ -47,6 +47,7 @@ class App {
         credentials: true,
       })
     );
+    this.app.set("trust proxy", true);
     // this.app.use((req, res, next) => {
     //   res.header(
     //     "Access-Control-Allow-Headers",
@@ -63,7 +64,6 @@ class App {
         cookie: {
           httpOnly: true,
           secure: false,
-          domain: "http://localhost:3000",
         },
       })
     );
