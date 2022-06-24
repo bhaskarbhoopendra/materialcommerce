@@ -12,8 +12,8 @@ const cli_color_1 = __importDefault(require("cli-color"));
 const cors_1 = __importDefault(require("cors"));
 const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
-require("./config/google");
 require("./config/passport");
+require("./config/google");
 const express_flash_1 = __importDefault(require("express-flash"));
 class App {
     constructor(controllers) {

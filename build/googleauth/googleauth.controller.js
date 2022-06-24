@@ -38,8 +38,12 @@ class GoogleAuthController {
         };
         this.getUser = async (request, response) => {
             console.log(request.user);
-            if (request.user) {
-                response.send(request.user);
+            const user = request.user;
+            const token = this.createToken(user);
+            const cookie = this.createCookie(token);
+            if (user) {
+                response.setHeader("Set-Cookie", [cookie]);
+                response.send(user);
             }
             else {
                 response.send("No user");
@@ -47,6 +51,7 @@ class GoogleAuthController {
         };
         this.googleLogout = async (request, response, next) => {
             if (request.user) {
+                response.setHeader("Set-Cookie", ["Authorization=;Max-Age=0"]);
                 request.logout((error) => {
                     if (error)
                         return next(error);

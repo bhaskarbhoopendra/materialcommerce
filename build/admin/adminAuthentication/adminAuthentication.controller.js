@@ -74,7 +74,7 @@ class AdminAuthenticationController {
         };
         this.adminLogout = (request, response) => {
             try {
-                response.setHeader("Set-Cookie", ["Authorization=,Max-Age=0"]);
+                response.setHeader("Set-Cookie", ["Authorization=;Max-Age=0"]);
                 response.send("Logged Out");
             }
             catch (error) {
