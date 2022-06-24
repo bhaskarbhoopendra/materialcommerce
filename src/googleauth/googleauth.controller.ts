@@ -31,9 +31,13 @@ class GoogleAuthController implements Controller {
   }
 
   private googleCallback = async (request: Request, response: Response) => {
-    response.redirect(
-      "https://orca-app-hlc5k.ondigitalocean.app/googlesuccess"
-    );
+    if (process.env.NODE_ENV === "production") {
+      response.redirect(
+        "https://orca-app-hlc5k.ondigitalocean.app/googlesuccess"
+      );
+    } else {
+      response.redirect("http://localhost:3000");
+    }
   };
 
   private getUser = async (request: Request, response: Response) => {
@@ -80,38 +84,3 @@ class GoogleAuthController implements Controller {
 }
 
 export default GoogleAuthController;
-
-// private googleCallbackWithCookieAndToken = async (
-//   request: Request,
-//   response: Response
-// ) => {
-//   console.log("redirected", request.user);
-//   // const profile = { ...request.user };
-//   const newUser = {
-//     googleId: request.user?.id,
-//     email: request.user?.emails[0].value,
-//     firstName: request.user?.name.givenName,
-//     lastName: request.user?.name.familyName,
-//     profilePhoto: request.user?.photos[0].value,
-//     source: "google",
-//   };
-
-//   // const googleAuthService = new GoogleAuthService();
-//   try {
-//     const currentUser = await UserModel.findOne({
-//       googleId: request.user?.id,
-//     });
-//     if (currentUser) {
-//       const tokenData = this.createToken(currentUser);
-//       response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-//       response.send({ tokenData, currentUser });
-//     } else {
-//       const user: IUser = await UserModel.create(newUser);
-//       const tokenData = this.createToken(user);
-//       response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-//       response.send({ tokenData, user });
-//     }
-//   } catch (error) {
-//     return error;
-//   }
-// };

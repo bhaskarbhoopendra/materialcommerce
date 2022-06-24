@@ -56,23 +56,35 @@ class App {
     initializeMiddleware() {
         const { SESSION } = process.env;
         this.app.use(express_1.default.json());
-        this.app.use((0, cors_1.default)({
-            origin: "https://orca-app-hlc5k.ondigitalocean.app",
-            // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-            credentials: true,
-        }));
+        if (process.env.NODE_ENV === "production") {
+            this.app.use((0, cors_1.default)({
+                origin: "https://orca-app-hlc5k.ondigitalocean.app",
+                credentials: true,
+            }));
+            this.app.use((0, express_session_1.default)({
+                secret: `${SESSION}`,
+                resave: true,
+                saveUninitialized: true,
+                cookie: {
+                    sameSite: "none",
+                    secure: true,
+                    maxAge: 1000 * 60 * 60 * 24 * 7, // One Week
+                },
+            }));
+        }
+        else {
+            this.app.use((0, cors_1.default)({
+                origin: "http://localhost:3000",
+                credentials: true,
+            }));
+            this.app.use((0, express_session_1.default)({
+                secret: `${SESSION}`,
+                resave: true,
+                saveUninitialized: true,
+            }));
+        }
         this.app.set("trust proxy", 1);
         this.app.use((0, cookie_parser_1.default)());
-        this.app.use((0, express_session_1.default)({
-            secret: `${SESSION}`,
-            resave: true,
-            saveUninitialized: true,
-            cookie: {
-                sameSite: "none",
-                secure: true,
-                maxAge: 1000 * 60 * 60 * 24 * 7, // One Week
-            },
-        }));
         this.app.use((0, morgan_1.default)(":method :url :status :res[content-length] - :response-time ms"));
         this.app.use((0, express_flash_1.default)());
         this.app.use(express_1.default.static(`${__dirname}/public`));
