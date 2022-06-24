@@ -43,7 +43,7 @@ class GoogleAuthController implements Controller {
     const cookie = this.createCookie(token);
     if (user) {
       response.setHeader("Set-Cookie", [cookie]);
-      response.send(user);
+      response.send({ user, token });
     } else {
       response.send("No user");
     }
