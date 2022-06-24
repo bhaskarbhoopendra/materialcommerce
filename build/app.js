@@ -14,24 +14,16 @@ const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
 require("./config/passport");
 require("./config/google");
-const express_flash_1 = __importDefault(require("express-flash"));
 class App {
     constructor(controllers) {
         this.app = express_1.default.application;
         this.router = express_1.default.Router();
         this.connectToDatabase = async () => {
-            // try {
-            //   const { DATABASE_URI } = process.env;
-            //   await mongoose.connect(`${DATABASE_URI}`);
-            //   console.log(clc.green.italic("connected to db"));
-            // } catch (error) {
-            //   console.log("Failed to connect To DB", error);
-            // }
             const { DATABASE_URI } = process.env;
             await mongoose_1.default
                 .connect(`${DATABASE_URI}`)
                 .then(() => {
-                console.log(cli_color_1.default.green.italic("Connected to db"));
+                console.log(cli_color_1.default.magenta.underline.italic("MongoDb Connected"));
             })
                 .catch((err) => {
                 console.log(err);
@@ -45,7 +37,7 @@ class App {
     }
     listen() {
         this.app.listen(process.env.PORT, () => {
-            console.log(cli_color_1.default.yellow(`Server is running on ${process.env.PORT}`));
+            console.log(cli_color_1.default.yellow(`App is running on ${process.env.PORT}`));
         });
     }
     initializeController(controllers) {
@@ -86,7 +78,6 @@ class App {
         this.app.set("trust proxy", 1);
         this.app.use((0, cookie_parser_1.default)());
         this.app.use((0, morgan_1.default)(":method :url :status :res[content-length] - :response-time ms"));
-        this.app.use((0, express_flash_1.default)());
         this.app.use(express_1.default.static(`${__dirname}/public`));
         this.app.use(passport_1.default.initialize());
         this.app.use(passport_1.default.session());

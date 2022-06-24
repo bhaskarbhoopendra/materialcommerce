@@ -26,8 +26,6 @@ passport.use(
         profilePhoto: profile.photos[0].value,
         source: "google",
       };
-
-      const googleAuthService = new GoogleAuthService();
       try {
         const currentUser = await UserModel.findOne({ googleId: profile.id });
         if (currentUser) {

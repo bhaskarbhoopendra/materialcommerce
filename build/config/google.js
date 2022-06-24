@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const passport_1 = __importDefault(require("passport"));
 const passport_google_oauth20_1 = __importDefault(require("passport-google-oauth20"));
-const googleauth_service_1 = __importDefault(require("../googleauth/googleauth.service"));
 const user_model_1 = __importDefault(require("../user/user.model"));
 const googleStrategy = passport_google_oauth20_1.default.Strategy;
 passport_1.default.use(new googleStrategy({
@@ -21,7 +20,6 @@ passport_1.default.use(new googleStrategy({
         profilePhoto: profile.photos[0].value,
         source: "google",
     };
-    const googleAuthService = new googleauth_service_1.default();
     try {
         const currentUser = await user_model_1.default.findOne({ googleId: profile.id });
         if (currentUser) {
