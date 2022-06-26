@@ -6,6 +6,7 @@ import AuthenticationController from "./authentication/authentication.controller
 import PincodeTypeController from "./freightrate/pincodetype/pincodetype.controller";
 import ZoneController from "./freightrate/zone/zone.controller";
 import GoogleAuthController from "./googleauth/googleauth.controller";
+import ProductController from "./product/product.controller";
 import VendorAuthenticationController from "./vendor/vendor.authentication.controller";
 import WarehouseController from "./warehouse/warehouse.controller";
 
@@ -17,7 +18,8 @@ const app = new App([
   new AuthenticationController(),
   new VendorAuthenticationController(),
   new WarehouseController(),
-  new AdminController()
+  new AdminController(),
+  new ProductController(),
 ]);
 
-app.listen();  
+app.listen();
