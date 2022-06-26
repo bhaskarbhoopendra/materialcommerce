@@ -22,6 +22,17 @@ class FreightRateController implements Controller {
       adminMiddleware,
       this.createFreightRate
     );
+    this.router.put(
+      `${this.path}/update/:freightrateId`,
+      adminMiddleware,
+      this.updateFreightRate
+    );
+    this.router.delete(
+      `${this.path}/delete/:freightrateId`,
+      adminMiddleware,
+      this.deleteFreightRate
+    );
+    this.router.get(`${this.path}`, adminMiddleware, this.getAllFreightRate);
   }
 
   private createFreightRate = async (
@@ -42,6 +53,45 @@ class FreightRateController implements Controller {
           freightRateData
         );
       response.send(newfreightRate);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  private updateFreightRate = async (
+    request: Request,
+    response: Response
+  ): Promise<void> => {
+    const freightRateId: string = request.params.freightrateId;
+    const freightRateData: FreightRateDto = request.body;
+    try {
+      const updateFreightRate =
+        await this.freightRateService.updateFreightRateService(
+          freightRateId,
+          freightRateData
+        );
+      response.send(updateFreightRate);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  private deleteFreightRate = async (
+    request: Request,
+    response: Response
+  ): Promise<void> => {
+    const freightRateId: string = request.params.freightrateId;
+    await this.freightRateService.deleteFreightRateService(freightRateId);
+    response.send("Freight Rate Deleted");
+  };
+
+  private getAllFreightRate = async (
+    request: Request,
+    response: Response
+  ): Promise<void> => {
+    try {
+      const freightRate = await this.freightRateService.getAllFreightRate();
+      response.send(freightRate);
     } catch (error) {
       console.log(error);
     }

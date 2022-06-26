@@ -16,14 +16,33 @@ export default class FreigthRateService {
     const newFreightRate = {
       zone: zoneId,
       pincodeType: pincodeTypeId,
-      weightType: weightType,
-      lowerbound: lowerbound,
-      upperbound: upperbound,
-      rate: rate,
+      weightType,
+      lowerbound,
+      upperbound,
+      rate,
     };
-    const freightRate = await this.freightRateDbManger.createFreightRate(
-      newFreightRate
-    );
+    const freightRate: FreightRateDto =
+      await this.freightRateDbManger.createFreightRate(newFreightRate);
     return freightRate;
+  };
+
+  updateFreightRateService = async (
+    freightRateId: string,
+    freightRateData: FreightRateDto
+  ): Promise<FreightRateDto> => {
+    const freightRate: FreightRateDto =
+      await this.freightRateDbManger.updateFreightRate(
+        freightRateId,
+        freightRateData
+      );
+    return freightRate;
+  };
+
+  deleteFreightRateService = async (freightRateId: string) => {
+    return await this.freightRateDbManger.deleteFreightRate(freightRateId);
+  };
+
+  getAllFreightRate = async () => {
+    return await this.freightRateDbManger.getAllFreightRate();
   };
 }
