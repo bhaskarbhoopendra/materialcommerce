@@ -14,13 +14,23 @@ class FreigthRateService {
             const newFreightRate = {
                 zone: zoneId,
                 pincodeType: pincodeTypeId,
-                weightType: weightType,
-                lowerbound: lowerbound,
-                upperbound: upperbound,
-                rate: rate,
+                weightType,
+                lowerbound,
+                upperbound,
+                rate,
             };
             const freightRate = await this.freightRateDbManger.createFreightRate(newFreightRate);
             return freightRate;
+        };
+        this.updateFreightRateService = async (freightRateId, freightRateData) => {
+            const freightRate = await this.freightRateDbManger.updateFreightRate(freightRateId, freightRateData);
+            return freightRate;
+        };
+        this.deleteFreightRateService = async (freightRateId) => {
+            return await this.freightRateDbManger.deleteFreightRate(freightRateId);
+        };
+        this.getAllFreightRate = async () => {
+            return await this.freightRateDbManger.getAllFreightRate();
         };
     }
 }

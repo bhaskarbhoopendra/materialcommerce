@@ -10,6 +10,15 @@ class FreightRateDbManager {
         this.createFreightRate = async (data) => {
             return await this.freightratemodel.create(Object.assign({}, data));
         };
+        this.updateFreightRate = async (freightRateId, freightRateData) => {
+            return await this.freightratemodel.findByIdAndUpdate(freightRateId, Object.assign({}, freightRateData), { new: true });
+        };
+        this.deleteFreightRate = async (freightRateId) => {
+            return await this.freightratemodel.findByIdAndDelete(freightRateId);
+        };
+        this.getAllFreightRate = async () => {
+            return await this.freightratemodel.find({});
+        };
     }
 }
 exports.default = FreightRateDbManager;

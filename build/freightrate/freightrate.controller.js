@@ -31,10 +31,38 @@ class FreightRateController {
                 console.log(error);
             }
         };
+        this.updateFreightRate = async (request, response) => {
+            const freightRateId = request.params.freightrateId;
+            const freightRateData = request.body;
+            try {
+                const updateFreightRate = await this.freightRateService.updateFreightRateService(freightRateId, freightRateData);
+                response.send(updateFreightRate);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        };
+        this.deleteFreightRate = async (request, response) => {
+            const freightRateId = request.params.freightrateId;
+            await this.freightRateService.deleteFreightRateService(freightRateId);
+            response.send("Freight Rate Deleted");
+        };
+        this.getAllFreightRate = async (request, response) => {
+            try {
+                const freightRate = await this.freightRateService.getAllFreightRate();
+                response.send(freightRate);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        };
         this.initializeRoutes();
     }
     initializeRoutes() {
         this.router.post(`${this.path}/create/:zoneId/:pincodetypeId`, admin_middleware_1.default, this.createFreightRate);
+        this.router.put(`${this.path}/update/:freightrateId`, admin_middleware_1.default, this.updateFreightRate);
+        this.router.delete(`${this.path}/delete/:freightrateId`, admin_middleware_1.default, this.deleteFreightRate);
+        this.router.get(`${this.path}`, admin_middleware_1.default, this.getAllFreightRate);
     }
 }
 exports.default = FreightRateController;
