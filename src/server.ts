@@ -3,6 +3,7 @@ import AdminController from "./admin/admin.controller";
 import AdminAuthenticationController from "./admin/adminAuthentication/adminAuthentication.controller";
 import App from "./app";
 import AuthenticationController from "./authentication/authentication.controller";
+import FreightRateController from "./freightrate/freightrate.controller";
 import PincodeTypeController from "./freightrate/pincodetype/pincodetype.controller";
 import ZoneController from "./freightrate/zone/zone.controller";
 import GoogleAuthController from "./googleauth/googleauth.controller";
@@ -17,7 +18,8 @@ const app = new App([
   new AuthenticationController(),
   new VendorAuthenticationController(),
   new WarehouseController(),
-  new AdminController()
+  new AdminController(),
+  new FreightRateController(),
 ]);
 
-app.listen();  
+app.listen();
