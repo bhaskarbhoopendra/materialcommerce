@@ -73,7 +73,7 @@ class AdminAuthenticationController implements Controller {
 
   private adminLogout = (request: Request, response: Response) => {
     try {
-      response.setHeader("Set-Cookie", ["Authorization=,Max-Age=0"]);
+      response.setHeader("Set-Cookie", ["Authorization=;Max-Age=0"]);
       response.send("Logged Out");
     } catch (error) {
       return error;
