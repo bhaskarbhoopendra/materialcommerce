@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import express, { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
@@ -11,6 +12,20 @@ import passport from 'passport';
 import './config/passport';
 import './config/google';
 import flash from 'express-flash';
+=======
+import express, { NextFunction, Request, Response } from "express";
+import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
+import errorHandler from "./middleware/error.middleware";
+import Controller from "./interfaces/controller.interface";
+import morgan from "morgan";
+import clc from "cli-color";
+import cors from "cors";
+import session from "express-session";
+import passport from "passport";
+import "./config/passport";
+import "./config/google";
+>>>>>>> 766959088066ed198590682a19a378c25d68b70f
 
 class App {
   public app = express.application;
@@ -27,7 +42,7 @@ class App {
 
   public listen() {
     this.app.listen(process.env.PORT, () => {
-      console.log(clc.yellow(`Server is running on ${process.env.PORT}`));
+      console.log(clc.yellow(`App is running on ${process.env.PORT}`));
     });
   }
 
@@ -40,31 +55,46 @@ class App {
   private initializeMiddleware() {
     const { SESSION } = process.env;
     this.app.use(express.json());
-    this.app.use(
-      cors({
-        origin: 'http://localhost:3000',
-        // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        credentials: true,
-      })
-    );
-    this.app.set('trust proxy', 1);
+    if (process.env.NODE_ENV === "production") {
+      this.app.use(
+        cors({
+          origin: "https://orca-app-hlc5k.ondigitalocean.app",
+          credentials: true,
+        })
+      );
+      this.app.use(
+        session({
+          secret: `${SESSION}`,
+          resave: true,
+          saveUninitialized: true,
+          cookie: {
+            sameSite: "none",
+            secure: true,
+            maxAge: 1000 * 60 * 60 * 24 * 7, // One Week
+          },
+        })
+      );
+    } else {
+      this.app.use(
+        cors({
+          origin: "http://localhost:3000",
+          credentials: true,
+        })
+      );
+      this.app.use(
+        session({
+          secret: `${SESSION}`,
+          resave: true,
+          saveUninitialized: true,
+        })
+      );
+    }
+    this.app.set("trust proxy", 1);
     this.app.use(cookieParser());
-    this.app.use(
-      session({
-        secret: `${SESSION}`,
-        resave: true,
-        saveUninitialized: true,
-        // cookie: {
-        //   // sameSite: 'none',
-        //   // secure: true,
-        //   maxAge: 1000 * 60 * 60 * 24 * 7, // One Week
-        // },
-      })
-    );
+
     this.app.use(
       morgan(':method :url :status :res[content-length] - :response-time ms')
     );
-    this.app.use(flash());
     this.app.use(express.static(`${__dirname}/public`));
     this.app.use(passport.initialize());
     this.app.use(passport.session());
@@ -75,19 +105,15 @@ class App {
   }
 
   private connectToDatabase = async () => {
-    // try {
-    //   const { DATABASE_URI } = process.env;
-    //   await mongoose.connect(`${DATABASE_URI}`);
-    //   console.log(clc.green.italic("connected to db"));
-    // } catch (error) {
-    //   console.log("Failed to connect To DB", error);
-    // }
-
     const { DATABASE_URI } = process.env;
     await mongoose
       .connect(`${DATABASE_URI}`)
       .then(() => {
+<<<<<<< HEAD
         console.log(clc.green.italic('Connected to db'));
+=======
+        console.log(clc.magenta.underline.italic("MongoDb Connected"));
+>>>>>>> 766959088066ed198590682a19a378c25d68b70f
       })
       .catch((err) => {
         console.log(err);

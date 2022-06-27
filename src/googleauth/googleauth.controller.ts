@@ -36,8 +36,12 @@ class GoogleAuthController implements Controller {
 
   private getUser = async (request: Request, response: Response) => {
     console.log(request.user);
-    if (request.user) {
-      response.send(request.user);
+    const user = request.user;
+    const token = this.createToken(user);
+    const cookie = this.createCookie(token);
+    if (user) {
+      response.setHeader('Set-Cookie', [cookie]);
+      response.send({ user, token });
     } else {
       response.send('No user');
     }
@@ -49,6 +53,7 @@ class GoogleAuthController implements Controller {
     next: NextFunction
   ) => {
     if (request.user) {
+      response.setHeader('Set-Cookie', ['Authorization=;Max-Age=0']);
       request.logout((error) => {
         if (error) return next(error);
         response.send('LoggedOUt');
@@ -59,7 +64,7 @@ class GoogleAuthController implements Controller {
   public createCookie(tokenData: TokenData) {
     return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
   }
-  public createToken(user: IUser): TokenData {
+  public createToken(user: any): TokenData {
     const expiresIn = 60 * 60; // an hour
     const { JWT_SECRET } = process.env;
     const dataStoredInToken: DataStoredInToken = {
@@ -73,38 +78,3 @@ class GoogleAuthController implements Controller {
 }
 
 export default GoogleAuthController;
-
-// private googleCallbackWithCookieAndToken = async (
-//   request: Request,
-//   response: Response
-// ) => {
-//   console.log("redirected", request.user);
-//   // const profile = { ...request.user };
-//   const newUser = {
-//     googleId: request.user?.id,
-//     email: request.user?.emails[0].value,
-//     firstName: request.user?.name.givenName,
-//     lastName: request.user?.name.familyName,
-//     profilePhoto: request.user?.photos[0].value,
-//     source: "google",
-//   };
-
-//   // const googleAuthService = new GoogleAuthService();
-//   try {
-//     const currentUser = await UserModel.findOne({
-//       googleId: request.user?.id,
-//     });
-//     if (currentUser) {
-//       const tokenData = this.createToken(currentUser);
-//       response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-//       response.send({ tokenData, currentUser });
-//     } else {
-//       const user: IUser = await UserModel.create(newUser);
-//       const tokenData = this.createToken(user);
-//       response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
-//       response.send({ tokenData, user });
-//     }
-//   } catch (error) {
-//     return error;
-//   }
-// };

@@ -6,8 +6,9 @@
   "scripts": {
     "start:build": "tsc -w",
     "start:run": "nodemon build/server.js",
-    "start": "concurrently npm:start:*",
-    "dev": "tsc -w & nodemon build/server.js"
+    "start": "NODE_ENV=production concurrently npm:start:*",
+    "dev": "tsc -w & nodemon build/server.js",
+    "server" : "concurrently tsc-w && nodemon build/server.js"
   },
   "author": "bhoopendra",
   "license": "ISC",
