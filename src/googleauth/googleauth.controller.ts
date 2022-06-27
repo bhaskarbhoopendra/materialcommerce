@@ -1,13 +1,13 @@
-import { Request, Router, Response, NextFunction } from "express";
-import passport from "passport";
-import Controller from "../interfaces/controller.interface";
-import * as jwt from "jsonwebtoken";
-import TokenData from "../interfaces/takenData.interface";
-import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
-import IUser from "../user/user.interface";
+import { Request, Router, Response, NextFunction } from 'express';
+import passport from 'passport';
+import Controller from '../interfaces/controller.interface';
+import * as jwt from 'jsonwebtoken';
+import TokenData from '../interfaces/takenData.interface';
+import DataStoredInToken from '../interfaces/dataStoredInToken.interface';
+import IUser from '../user/user.interface';
 
 class GoogleAuthController implements Controller {
-  path = "/auth/google";
+  path = '/auth/google';
   router = Router();
   constructor() {
     this.initializeRoutes();
@@ -16,24 +16,22 @@ class GoogleAuthController implements Controller {
   private initializeRoutes() {
     this.router.get(
       `${this.path}`,
-      passport.authenticate("google", {
-        scope: ["email", "profile"],
+      passport.authenticate('google', {
+        scope: ['email', 'profile'],
       })
     );
 
     this.router.get(
       `${this.path}/callback`,
-      passport.authenticate("google", { session: true }),
+      passport.authenticate('google', { session: true }),
       this.googleCallback
     );
-    this.router.get("/logout", this.googleLogout);
+    this.router.get('/logout', this.googleLogout);
     this.router.get(`/user`, this.getUser);
   }
 
   private googleCallback = async (request: Request, response: Response) => {
-    response.redirect(
-      "https://orca-app-hlc5k.ondigitalocean.app/googlesuccess"
-    );
+    response.redirect('http://localhost:3000/googlesuccess');
   };
 
   private getUser = async (request: Request, response: Response) => {
@@ -41,7 +39,7 @@ class GoogleAuthController implements Controller {
     if (request.user) {
       response.send(request.user);
     } else {
-      response.send("No user");
+      response.send('No user');
     }
   };
 
@@ -53,7 +51,7 @@ class GoogleAuthController implements Controller {
     if (request.user) {
       request.logout((error) => {
         if (error) return next(error);
-        response.send("LoggedOUt");
+        response.send('LoggedOUt');
       });
     }
   };

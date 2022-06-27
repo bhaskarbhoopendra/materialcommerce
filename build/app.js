@@ -12,8 +12,8 @@ const cli_color_1 = __importDefault(require("cli-color"));
 const cors_1 = __importDefault(require("cors"));
 const express_session_1 = __importDefault(require("express-session"));
 const passport_1 = __importDefault(require("passport"));
-require("./config/google");
 require("./config/passport");
+require("./config/google");
 const express_flash_1 = __importDefault(require("express-flash"));
 class App {
     constructor(controllers) {
@@ -31,7 +31,7 @@ class App {
             await mongoose_1.default
                 .connect(`${DATABASE_URI}`)
                 .then(() => {
-                console.log(cli_color_1.default.green.italic("Connected to db"));
+                console.log(cli_color_1.default.green.italic('Connected to db'));
             })
                 .catch((err) => {
                 console.log(err);
@@ -50,30 +50,30 @@ class App {
     }
     initializeController(controllers) {
         controllers.forEach((controller) => {
-            this.app.use("/", controller.router);
+            this.app.use('/', controller.router);
         });
     }
     initializeMiddleware() {
         const { SESSION } = process.env;
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)({
-            origin: "https://orca-app-hlc5k.ondigitalocean.app",
+            origin: 'http://localhost:3000',
             // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
             credentials: true,
         }));
-        this.app.set("trust proxy", 1);
+        this.app.set('trust proxy', 1);
         this.app.use((0, cookie_parser_1.default)());
         this.app.use((0, express_session_1.default)({
             secret: `${SESSION}`,
             resave: true,
             saveUninitialized: true,
-            cookie: {
-                sameSite: "none",
-                secure: true,
-                maxAge: 1000 * 60 * 60 * 24 * 7, // One Week
-            },
+            // cookie: {
+            //   // sameSite: 'none',
+            //   // secure: true,
+            //   maxAge: 1000 * 60 * 60 * 24 * 7, // One Week
+            // },
         }));
-        this.app.use((0, morgan_1.default)(":method :url :status :res[content-length] - :response-time ms"));
+        this.app.use((0, morgan_1.default)(':method :url :status :res[content-length] - :response-time ms'));
         this.app.use((0, express_flash_1.default)());
         this.app.use(express_1.default.static(`${__dirname}/public`));
         this.app.use(passport_1.default.initialize());

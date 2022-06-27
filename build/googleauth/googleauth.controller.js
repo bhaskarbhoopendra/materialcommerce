@@ -31,10 +31,10 @@ const passport_1 = __importDefault(require("passport"));
 const jwt = __importStar(require("jsonwebtoken"));
 class GoogleAuthController {
     constructor() {
-        this.path = "/auth/google";
+        this.path = '/auth/google';
         this.router = (0, express_1.Router)();
         this.googleCallback = async (request, response) => {
-            response.redirect("https://orca-app-hlc5k.ondigitalocean.app/googlesuccess");
+            response.redirect('http://localhost:3000/googlesuccess');
         };
         this.getUser = async (request, response) => {
             console.log(request.user);
@@ -42,7 +42,7 @@ class GoogleAuthController {
                 response.send(request.user);
             }
             else {
-                response.send("No user");
+                response.send('No user');
             }
         };
         this.googleLogout = async (request, response, next) => {
@@ -50,18 +50,18 @@ class GoogleAuthController {
                 request.logout((error) => {
                     if (error)
                         return next(error);
-                    response.send("LoggedOUt");
+                    response.send('LoggedOUt');
                 });
             }
         };
         this.initializeRoutes();
     }
     initializeRoutes() {
-        this.router.get(`${this.path}`, passport_1.default.authenticate("google", {
-            scope: ["email", "profile"],
+        this.router.get(`${this.path}`, passport_1.default.authenticate('google', {
+            scope: ['email', 'profile'],
         }));
-        this.router.get(`${this.path}/callback`, passport_1.default.authenticate("google", { session: true }), this.googleCallback);
-        this.router.get("/logout", this.googleLogout);
+        this.router.get(`${this.path}/callback`, passport_1.default.authenticate('google', { session: true }), this.googleCallback);
+        this.router.get('/logout', this.googleLogout);
         this.router.get(`/user`, this.getUser);
     }
     createCookie(tokenData) {
