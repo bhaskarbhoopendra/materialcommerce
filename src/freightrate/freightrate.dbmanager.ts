@@ -5,7 +5,7 @@ export default class FreightRateDbManager {
   freightratemodel = FreightRateModel;
   constructor() {}
 
-  createFreightRate = async (data: FreightRateDto) => {
+  createFreightRate = async (data: any) => {
     return await this.freightratemodel.create({ ...data });
   };
 
@@ -25,6 +25,9 @@ export default class FreightRateDbManager {
   };
 
   getAllFreightRate = async () => {
-    return await this.freightratemodel.find({});
+    return await this.freightratemodel
+      .find({})
+      .populate("pincodetype")
+      .populate("zone");
   };
 }

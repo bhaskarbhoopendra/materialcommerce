@@ -3,28 +3,28 @@ import FreightRateDto from "./freightrate.dto";
 import FreightRateModel from "./freightrate.model";
 
 export default class FreigthRateService {
-  freightRatemodel = FreightRateModel;
+  // freightRatemodel = FreightRateModel;
   freightRateDbManger = new FreightRateDbManager();
   constructor() {}
 
-  // createFreightRateService = async (
-  //   zoneId: string,
-  //   pincodeTypeId: string,
-  //   freightRateData: FreightRateDto
-  // ): Promise<FreightRateDto> => {
-  //   const { weightType, lowerbound, upperbound, rate } = freightRateData;
-  //   const newFreightRate = {
-  //     zone: zoneId,
-  //     pincodeType: pincodeTypeId,
-  //     weightType,
-  //     lowerbound,
-  //     upperbound,
-  //     rate,
-  //   };
-  //   const freightRate: FreightRateDto =
-  //     await this.freightRateDbManger.createFreightRate(newFreightRate);
-  //   return freightRate;
-  // };
+  createFreightRateService = async (
+    zoneId: string,
+    pincodeTypeId: string,
+    freightRateData: any
+  ) => {
+    const { weightType, upperbound, lowerbound, rate } = freightRateData;
+    const newFreightRateData = {
+      zone: zoneId,
+      pincodetype: pincodeTypeId,
+      weightType,
+      upperbound,
+      lowerbound,
+      rate,
+    };
+    const freightrate = await this.freightRateDbManger.createFreightRate(
+      newFreightRateData
+    );
+  };
 
   updateFreightRateService = async (
     freightRateId: string,
@@ -42,7 +42,7 @@ export default class FreigthRateService {
     return await this.freightRateDbManger.deleteFreightRate(freightRateId);
   };
 
-  getAllFreightRate = async () => {
+  getAllFreightRateService = async () => {
     return await this.freightRateDbManger.getAllFreightRate();
   };
 }

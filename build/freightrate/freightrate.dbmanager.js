@@ -17,7 +17,10 @@ class FreightRateDbManager {
             return await this.freightratemodel.findByIdAndDelete(freightRateId);
         };
         this.getAllFreightRate = async () => {
-            return await this.freightratemodel.find({});
+            return await this.freightratemodel
+                .find({})
+                .populate("pincodetype")
+                .populate("zone");
         };
     }
 }

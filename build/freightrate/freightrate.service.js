@@ -4,29 +4,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const freightrate_dbmanager_1 = __importDefault(require("./freightrate.dbmanager"));
-const freightrate_model_1 = __importDefault(require("./freightrate.model"));
 class FreigthRateService {
     constructor() {
-        this.freightRatemodel = freightrate_model_1.default;
+        // freightRatemodel = FreightRateModel;
         this.freightRateDbManger = new freightrate_dbmanager_1.default();
-        // createFreightRateService = async (
-        //   zoneId: string,
-        //   pincodeTypeId: string,
-        //   freightRateData: FreightRateDto
-        // ): Promise<FreightRateDto> => {
-        //   const { weightType, lowerbound, upperbound, rate } = freightRateData;
-        //   const newFreightRate = {
-        //     zone: zoneId,
-        //     pincodeType: pincodeTypeId,
-        //     weightType,
-        //     lowerbound,
-        //     upperbound,
-        //     rate,
-        //   };
-        //   const freightRate: FreightRateDto =
-        //     await this.freightRateDbManger.createFreightRate(newFreightRate);
-        //   return freightRate;
-        // };
+        this.createFreightRateService = async (zoneId, pincodeTypeId, freightRateData) => {
+            const { weightType, upperbound, lowerbound, rate } = freightRateData;
+            const newFreightRateData = {
+                zone: zoneId,
+                pincodetype: pincodeTypeId,
+                weightType,
+                upperbound,
+                lowerbound,
+                rate,
+            };
+            const freightrate = await this.freightRateDbManger.createFreightRate(newFreightRateData);
+        };
         this.updateFreightRateService = async (freightRateId, freightRateData) => {
             const freightRate = await this.freightRateDbManger.updateFreightRate(freightRateId, freightRateData);
             return freightRate;
@@ -34,7 +27,7 @@ class FreigthRateService {
         this.deleteFreightRateService = async (freightRateId) => {
             return await this.freightRateDbManger.deleteFreightRate(freightRateId);
         };
-        this.getAllFreightRate = async () => {
+        this.getAllFreightRateService = async () => {
             return await this.freightRateDbManger.getAllFreightRate();
         };
     }
