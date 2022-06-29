@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 import IPincodeType from "./pinocodetype.interface";
 
-const pincodeTypeShema = new mongoose.Schema({
+const pincodeTypeSchema = new mongoose.Schema({
   pincodeTypeName: String,
   isSpecialState: { type: Boolean, default: false },
 });
 
 const PincodeTypeModel = mongoose.model<IPincodeType & mongoose.Document>(
   "pincodetype",
-  pincodeTypeShema
+  pincodeTypeSchema
 );
 
 export default PincodeTypeModel;
