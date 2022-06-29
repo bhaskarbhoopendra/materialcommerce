@@ -1,6 +1,5 @@
 import passport from "passport";
 import passportGoogleOAuth from "passport-google-oauth20";
-import GoogleAuthService from "../googleauth/googleauth.service";
 import UserModel from "../user/user.model";
 
 const googleStrategy = passportGoogleOAuth.Strategy;

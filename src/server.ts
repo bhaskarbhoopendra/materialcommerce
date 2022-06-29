@@ -6,7 +6,7 @@ import AuthenticationController from "./authentication/authentication.controller
 import FreightRateController from "./freightrate/freightrate.controller";
 import PincodeTypeController from "./freightrate/pincodetype/pincodetype.controller";
 import ZoneController from "./freightrate/zone/zone.controller";
-import GoogleAuthController from "./googleauth/googleauth.controller";
+import GoogleAuthController from "./googleAuth/googleauth.controller";
 import VendorAuthenticationController from "./vendor/vendor.authentication.controller";
 import WarehouseController from "./warehouse/warehouse.controller";
 
