@@ -7,24 +7,24 @@ export default class FreigthRateService {
   freightRateDbManger = new FreightRateDbManager();
   constructor() {}
 
-  createFreightRateService = async (
-    zoneId: string,
-    pincodeTypeId: string,
-    freightRateData: FreightRateDto
-  ): Promise<FreightRateDto> => {
-    const { weightType, lowerbound, upperbound, rate } = freightRateData;
-    const newFreightRate = {
-      zone: zoneId,
-      pincodeType: pincodeTypeId,
-      weightType,
-      lowerbound,
-      upperbound,
-      rate,
-    };
-    const freightRate: FreightRateDto =
-      await this.freightRateDbManger.createFreightRate(newFreightRate);
-    return freightRate;
-  };
+  // createFreightRateService = async (
+  //   zoneId: string,
+  //   pincodeTypeId: string,
+  //   freightRateData: FreightRateDto
+  // ): Promise<FreightRateDto> => {
+  //   const { weightType, lowerbound, upperbound, rate } = freightRateData;
+  //   const newFreightRate = {
+  //     zone: zoneId,
+  //     pincodeType: pincodeTypeId,
+  //     weightType,
+  //     lowerbound,
+  //     upperbound,
+  //     rate,
+  //   };
+  //   const freightRate: FreightRateDto =
+  //     await this.freightRateDbManger.createFreightRate(newFreightRate);
+  //   return freightRate;
+  // };
 
   updateFreightRateService = async (
     freightRateId: string,

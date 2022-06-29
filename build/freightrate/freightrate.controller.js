@@ -8,6 +8,7 @@ const PincodeTypeNotFoundException_1 = __importDefault(require("../exceptions/Pi
 const ZoneNotFoundException_1 = __importDefault(require("../exceptions/ZoneNotFoundException"));
 const admin_middleware_1 = __importDefault(require("../middleware/admin.middleware"));
 const freightrate_dbmanager_1 = __importDefault(require("./freightrate.dbmanager"));
+const freightrate_model_1 = __importDefault(require("./freightrate.model"));
 const freightrate_service_1 = __importDefault(require("./freightrate.service"));
 class FreightRateController {
     constructor() {
@@ -23,9 +24,18 @@ class FreightRateController {
             if (pincodeTypeId == undefined)
                 throw new PincodeTypeNotFoundException_1.default(pincodeTypeId);
             const freightRateData = request.body;
+            const { weightType, upperbound, lowerbound, rate } = freightRateData;
             try {
-                const newfreightRate = await this.freightRateService.createFreightRateService(zoneId, pincodeTypeId, freightRateData);
-                response.send(newfreightRate);
+                const newFreightRateData = {
+                    zone: zoneId,
+                    pincodetype: pincodeTypeId,
+                    weightType,
+                    upperbound,
+                    lowerbound,
+                    rate,
+                };
+                const freightrate = await freightrate_model_1.default.create(Object.assign({}, newFreightRateData));
+                response.send(freightrate);
             }
             catch (error) {
                 console.log(error);
@@ -49,7 +59,9 @@ class FreightRateController {
         };
         this.getAllFreightRate = async (request, response) => {
             try {
-                const freightRate = await this.freightRateService.getAllFreightRate();
+                const freightRate = await freightrate_model_1.default.find({})
+                    .populate("pincodetype")
+                    .populate("zone");
                 response.send(freightRate);
             }
             catch (error) {

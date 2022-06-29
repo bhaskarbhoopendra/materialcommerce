@@ -1,20 +1,21 @@
 import mongoose from "mongoose";
-import IFreightRate from "./freigthrate.interface";
 
 const freightRateSchema = new mongoose.Schema({
-  zone: String,
-  pincodeType: String,
-  weightType: {
-    type: String,
-    enum: ["weight", "volumetricweight"],
-    default: "weight",
+  pincodetype: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "pincodetype",
   },
-  lowerbound: Number,
+  zone: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "zone",
+  },
+  weightType: String,
   upperbound: Number,
+  lowerbound: Number,
   rate: Number,
 });
 
-const FreightRateModel = mongoose.model<IFreightRate & mongoose.Document>(
+const FreightRateModel = mongoose.model<mongoose.Document>(
   "freightrate",
   freightRateSchema
 );

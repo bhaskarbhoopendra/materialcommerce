@@ -5,6 +5,7 @@ import Controller from "../interfaces/controller.interface";
 import adminMiddleware from "../middleware/admin.middleware";
 import FreightRateDbManager from "./freightrate.dbmanager";
 import FreightRateDto from "./freightrate.dto";
+import FreightRateModel from "./freightrate.model";
 import FreigthRateService from "./freightrate.service";
 
 class FreightRateController implements Controller {
@@ -44,15 +45,21 @@ class FreightRateController implements Controller {
     const pincodeTypeId: string = request.params.pincodetypeId;
     if (pincodeTypeId == undefined)
       throw new PincodeTypeNotFoundException(pincodeTypeId);
-    const freightRateData: FreightRateDto = request.body;
+    const freightRateData = request.body;
+    const { weightType, upperbound, lowerbound, rate } = freightRateData;
     try {
-      const newfreightRate: FreightRateDto =
-        await this.freightRateService.createFreightRateService(
-          zoneId,
-          pincodeTypeId,
-          freightRateData
-        );
-      response.send(newfreightRate);
+      const newFreightRateData = {
+        zone: zoneId,
+        pincodetype: pincodeTypeId,
+        weightType,
+        upperbound,
+        lowerbound,
+        rate,
+      };
+      const freightrate = await FreightRateModel.create({
+        ...newFreightRateData,
+      });
+      response.send(freightrate);
     } catch (error) {
       console.log(error);
     }
@@ -90,7 +97,9 @@ class FreightRateController implements Controller {
     response: Response
   ): Promise<void> => {
     try {
-      const freightRate = await this.freightRateService.getAllFreightRate();
+      const freightRate = await FreightRateModel.find({})
+        .populate("pincodetype")
+        .populate("zone");
       response.send(freightRate);
     } catch (error) {
       console.log(error);
