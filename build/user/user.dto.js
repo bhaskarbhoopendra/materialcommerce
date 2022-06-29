@@ -33,4 +33,10 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsString)()
 ], UserDTO.prototype, "lastVisited", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)()
+], UserDTO.prototype, "wishlist", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)()
+], UserDTO.prototype, "cart", void 0);
 exports.default = UserDTO;

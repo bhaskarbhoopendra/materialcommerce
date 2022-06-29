@@ -8,6 +8,8 @@ interface Base {
   phoeNumber: number;
   googleId: string;
   profilePhoto: string;
+  cart: [string];
+  wishlist: [string];
 }
 
 interface IUser extends Base {

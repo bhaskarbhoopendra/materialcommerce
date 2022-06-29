@@ -1,7 +1,6 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsArray, IsNumber, IsString } from "class-validator";
 
 class UserDTO {
-
   @IsString()
   id?: string;
 
@@ -25,6 +24,12 @@ class UserDTO {
 
   @IsString()
   lastVisited: string;
+
+  @IsArray()
+  wishlist: [string];
+
+  @IsArray()
+  cart: [string];
 }
 
 export default UserDTO;
