@@ -24,8 +24,8 @@ class FreightRateController {
                 throw new PincodeTypeNotFoundException_1.default(pincodeTypeId);
             const freightRateData = request.body;
             try {
-                const newfreightRate = await this.freightRateService.createFreightRateService(zoneId, pincodeTypeId, freightRateData);
-                response.send(newfreightRate);
+                const freightrate = await this.freightRateService.createFreightRateService(zoneId, pincodeTypeId, freightRateData);
+                response.send(freightrate);
             }
             catch (error) {
                 console.log(error);
@@ -49,7 +49,7 @@ class FreightRateController {
         };
         this.getAllFreightRate = async (request, response) => {
             try {
-                const freightRate = await this.freightRateService.getAllFreightRate();
+                const freightRate = await this.freightRateService.getAllFreightRateService();
                 response.send(freightRate);
             }
             catch (error) {

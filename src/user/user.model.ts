@@ -12,7 +12,9 @@ const userSchema = new mongoose.Schema({
   lastName: String,
   phoneNumber: String,
   source: { type: String },
-  lastVisited: { type: Date, default: new Date() }
+  lastVisited: { type: Date, default: new Date() },
+  cart: [String],
+  wishlist: [String],
 });
 
 export const addressSchema = new mongoose.Schema({
@@ -21,8 +23,7 @@ export const addressSchema = new mongoose.Schema({
   street: String,
   pincode: Number,
   phoneNumber: Number,
-})
-
+});
 
 const UserModel = mongoose.model<IUser & mongoose.Document>("user", userSchema);
 
