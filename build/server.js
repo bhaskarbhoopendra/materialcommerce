@@ -9,6 +9,7 @@ const adminAuthentication_controller_1 = __importDefault(require("./admin/adminA
 const app_1 = __importDefault(require("./app"));
 const authentication_controller_1 = __importDefault(require("./authentication/authentication.controller"));
 const category_controller_1 = __importDefault(require("./categories/category/category.controller"));
+const subcateogry_controller_1 = __importDefault(require("./categories/sub-category/subcateogry.controller"));
 const freightrate_controller_1 = __importDefault(require("./freightrate/freightrate.controller"));
 const pincodetype_controller_1 = __importDefault(require("./freightrate/pincodetype/pincodetype.controller"));
 const zone_controller_1 = __importDefault(require("./freightrate/zone/zone.controller"));
@@ -28,5 +29,6 @@ const app = new app_1.default([
     new product_controller_1.default(),
     new freightrate_controller_1.default(),
     new category_controller_1.default(),
+    new subcateogry_controller_1.default(),
 ]);
 app.listen();

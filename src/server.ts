@@ -4,6 +4,7 @@ import AdminAuthenticationController from "./admin/adminAuthentication/adminAuth
 import App from "./app";
 import AuthenticationController from "./authentication/authentication.controller";
 import CategoryController from "./categories/category/category.controller";
+import SubCategoryController from "./categories/sub-category/subcateogry.controller";
 import FreightRateController from "./freightrate/freightrate.controller";
 import PincodeTypeController from "./freightrate/pincodetype/pincodetype.controller";
 import ZoneController from "./freightrate/zone/zone.controller";
@@ -24,6 +25,7 @@ const app = new App([
   new ProductController(),
   new FreightRateController(),
   new CategoryController(),
+  new SubCategoryController(),
 ]);
 
 app.listen();
