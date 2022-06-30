@@ -29,6 +29,8 @@ class CategoryController implements Controller {
       adminMiddleware,
       this.deleteCategory
     );
+
+    this.router.get(`${this.path}`, adminMiddleware, this.getAllCategory);
   }
 
   private async createCategory(
@@ -71,6 +73,15 @@ class CategoryController implements Controller {
       const categoryId: string = request.params.categoryId;
       const category = await CategoryModel.findByIdAndDelete(categoryId);
       response.send("deleted");
+    } catch (error) {
+      response.send(error);
+    }
+  }
+
+  private async getAllCategory(request: Request, response: Response) {
+    try {
+      const categories: CategoryDto[] = await CategoryModel.find({});
+      response.send(categories);
     } catch (error) {
       response.send(error);
     }

@@ -16,6 +16,7 @@ class CategoryController {
         this.router.post(`${this.path}/create`, admin_middleware_1.default, this.createCategory);
         this.router.put(`${this.path}/update/:categoryId`, admin_middleware_1.default, this.updateCategory);
         this.router.delete(`${this.path}/delete/:categoryId`, admin_middleware_1.default, this.deleteCategory);
+        this.router.get(`${this.path}`, admin_middleware_1.default, this.getAllCategory);
     }
     async createCategory(request, response) {
         const { categoryName } = request.body;
@@ -44,6 +45,15 @@ class CategoryController {
             const categoryId = request.params.categoryId;
             const category = await category_model_1.default.findByIdAndDelete(categoryId);
             response.send("deleted");
+        }
+        catch (error) {
+            response.send(error);
+        }
+    }
+    async getAllCategory(request, response) {
+        try {
+            const categories = await category_model_1.default.find({});
+            response.send(categories);
         }
         catch (error) {
             response.send(error);
