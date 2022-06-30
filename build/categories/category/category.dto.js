@@ -12,4 +12,7 @@ class CategoryDto {
 __decorate([
     (0, class_validator_1.IsString)()
 ], CategoryDto.prototype, "categoryName", void 0);
+__decorate([
+    (0, class_validator_1.IsString)()
+], CategoryDto.prototype, "categoryImage", void 0);
 exports.default = CategoryDto;

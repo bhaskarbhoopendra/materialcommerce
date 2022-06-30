@@ -1,12 +1,15 @@
 import { Request, Response, Router } from "express";
+import multer from "multer";
 import Controller from "../../interfaces/controller.interface";
 import adminMiddleware from "../../middleware/admin.middleware";
+import { fileFilter, fileStorage } from "../../util/multer";
 import CategoryDto from "./category.dto";
 import CategoryModel from "./category.model";
 
 class CategoryController implements Controller {
   path = "/category";
   router = Router();
+  upload = multer({ storage: fileStorage, fileFilter: fileFilter });
 
   constructor() {
     this.initializeRoutes();
@@ -16,11 +19,13 @@ class CategoryController implements Controller {
     this.router.post(
       `${this.path}/create`,
       adminMiddleware,
+      this.upload.single("categoryImage"),
       this.createCategory
     );
     this.router.put(
       `${this.path}/update/:categoryId`,
       adminMiddleware,
+      this.upload.single("categoryImage"),
       this.updateCategory
     );
 
@@ -38,9 +43,14 @@ class CategoryController implements Controller {
     response: Response
   ): Promise<void> {
     const { categoryName }: CategoryDto = request.body;
-    console.log(categoryName);
+    const categoryimagepath = request.file?.path;
+    console.log({ categoryName, categoryimagepath });
     try {
-      const category = await CategoryModel.create({ categoryName });
+      const newCategory = {
+        categoryName: categoryName,
+        categoryImage: categoryimagepath,
+      };
+      const category = await CategoryModel.create({ ...newCategory });
       response.send(category);
     } catch (error) {
       response.send(error);
@@ -54,9 +64,16 @@ class CategoryController implements Controller {
     try {
       const categoryId: string = request.params.categoryId;
       const { categoryName }: CategoryDto = request.body;
+      const categoryimagepath: string | undefined = request.file?.path;
+
+      const newUpatedCategory: CategoryDto = {
+        categoryName: categoryName,
+        categoryImage: categoryimagepath,
+      };
+
       const updatedCategory = await CategoryModel.findByIdAndUpdate(
         categoryId,
-        { categoryName },
+        { ...newUpatedCategory },
         { new: true }
       );
       response.send(updatedCategory);
