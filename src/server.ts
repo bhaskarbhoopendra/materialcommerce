@@ -3,6 +3,7 @@ import AdminController from "./admin/admin.controller";
 import AdminAuthenticationController from "./admin/adminAuthentication/adminAuthentication.controller";
 import App from "./app";
 import AuthenticationController from "./authentication/authentication.controller";
+import CategoryController from "./categories/category/category.controller";
 import FreightRateController from "./freightrate/freightrate.controller";
 import PincodeTypeController from "./freightrate/pincodetype/pincodetype.controller";
 import ZoneController from "./freightrate/zone/zone.controller";
@@ -22,6 +23,7 @@ const app = new App([
   new AdminController(),
   new ProductController(),
   new FreightRateController(),
+  new CategoryController(),
 ]);
 
 app.listen();
