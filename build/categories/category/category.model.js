@@ -7,6 +7,10 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const categorySchema = new mongoose_1.default.Schema({
     categoryName: { type: String, required: true },
     categoryImage: String,
+    subcategory: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "subcategory",
+    },
 });
 const CategoryModel = mongoose_1.default.model("category", categorySchema);
 exports.default = CategoryModel;

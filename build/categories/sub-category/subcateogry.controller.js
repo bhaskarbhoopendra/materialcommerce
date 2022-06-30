@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const multer_1 = __importDefault(require("multer"));
 const admin_middleware_1 = __importDefault(require("../../middleware/admin.middleware"));
-const auth_middleware_1 = __importDefault(require("../../middleware/auth.middleware"));
 const multer_2 = require("../../util/multer");
 const subcateogry_model_1 = __importDefault(require("./subcateogry.model"));
 class SubCategoryController {
@@ -19,8 +18,8 @@ class SubCategoryController {
     initializeRoutes() {
         this.router.post(`${this.path}/create`, admin_middleware_1.default, this.upload.single("subcategoryImage"), this.createSubCategory);
         this.router.put(`${this.path}/update/:subcategoryId`, admin_middleware_1.default, this.upload.single("subcategoryImage"), this.updateSubCategory);
-        this.router.delete(`{this.path}/delete/:subcategoryId`, auth_middleware_1.default, this.deleteSubCategory);
-        this.router.get(`${this.path}`, auth_middleware_1.default, this.getAllSubCategory);
+        this.router.delete(`${this.path}/delete/:subcategoryId`, admin_middleware_1.default, this.deleteSubCategory);
+        this.router.get(`${this.path}`, admin_middleware_1.default, this.getAllSubCategory);
     }
     async createSubCategory(request, response) {
         var _a;
@@ -46,6 +45,7 @@ class SubCategoryController {
             const subCategoryId = request.params.subcategoryId;
             const { subcategoryName } = request.body;
             const subcategoryImagePath = (_a = request.file) === null || _a === void 0 ? void 0 : _a.path;
+            console.log({ subCategoryId, subcategoryName, subcategoryImagePath });
             const updatedSubCategory = {
                 subcategoryName: subcategoryName,
                 subcategoryImage: subcategoryImagePath,

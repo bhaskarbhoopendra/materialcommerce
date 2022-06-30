@@ -30,11 +30,11 @@ class SubCategoryController implements Controller {
       this.updateSubCategory
     );
     this.router.delete(
-      `{this.path}/delete/:subcategoryId`,
-      authMiddleware,
+      `${this.path}/delete/:subcategoryId`,
+      adminMiddleware,
       this.deleteSubCategory
     );
-    this.router.get(`${this.path}`, authMiddleware, this.getAllSubCategory);
+    this.router.get(`${this.path}`, adminMiddleware, this.getAllSubCategory);
   }
 
   private async createSubCategory(
@@ -64,6 +64,8 @@ class SubCategoryController implements Controller {
       const subCategoryId: string = request.params.subcategoryId;
       const { subcategoryName }: SubCategoryDto = request.body;
       const subcategoryImagePath: string | undefined = request.file?.path;
+
+      console.log({ subCategoryId, subcategoryName, subcategoryImagePath });
       const updatedSubCategory = {
         subcategoryName: subcategoryName,
         subcategoryImage: subcategoryImagePath,
