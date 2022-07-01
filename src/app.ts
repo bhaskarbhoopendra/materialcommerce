@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import express, { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
@@ -11,21 +10,6 @@ import session from 'express-session';
 import passport from 'passport';
 import './config/passport';
 import './config/google';
-import flash from 'express-flash';
-=======
-import express, { NextFunction, Request, Response } from "express";
-import mongoose from "mongoose";
-import cookieParser from "cookie-parser";
-import errorHandler from "./middleware/error.middleware";
-import Controller from "./interfaces/controller.interface";
-import morgan from "morgan";
-import clc from "cli-color";
-import cors from "cors";
-import session from "express-session";
-import passport from "passport";
-import "./config/passport";
-import "./config/google";
->>>>>>> 766959088066ed198590682a19a378c25d68b70f
 
 class App {
   public app = express.application;
@@ -55,10 +39,10 @@ class App {
   private initializeMiddleware() {
     const { SESSION } = process.env;
     this.app.use(express.json());
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === 'production') {
       this.app.use(
         cors({
-          origin: "https://orca-app-hlc5k.ondigitalocean.app",
+          origin: 'https://orca-app-hlc5k.ondigitalocean.app',
           credentials: true,
         })
       );
@@ -68,7 +52,7 @@ class App {
           resave: true,
           saveUninitialized: true,
           cookie: {
-            sameSite: "none",
+            sameSite: 'none',
             secure: true,
             maxAge: 1000 * 60 * 60 * 24 * 7, // One Week
           },
@@ -77,8 +61,10 @@ class App {
     } else {
       this.app.use(
         cors({
-          origin: "http://localhost:3000",
-          credentials: true,
+          origin: '*',
+          methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+          preflightContinue: false,
+          optionsSuccessStatus: 204,
         })
       );
       this.app.use(
@@ -89,7 +75,7 @@ class App {
         })
       );
     }
-    this.app.set("trust proxy", 1);
+    this.app.set('trust proxy', 1);
     this.app.use(cookieParser());
 
     this.app.use(
@@ -109,11 +95,7 @@ class App {
     await mongoose
       .connect(`${DATABASE_URI}`)
       .then(() => {
-<<<<<<< HEAD
-        console.log(clc.green.italic('Connected to db'));
-=======
-        console.log(clc.magenta.underline.italic("MongoDb Connected"));
->>>>>>> 766959088066ed198590682a19a378c25d68b70f
+        console.log(clc.magenta.underline.italic('MongoDb Connected'));
       })
       .catch((err) => {
         console.log(err);

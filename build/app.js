@@ -23,7 +23,7 @@ class App {
             await mongoose_1.default
                 .connect(`${DATABASE_URI}`)
                 .then(() => {
-                console.log(cli_color_1.default.green.italic('Connected to db'));
+                console.log(cli_color_1.default.magenta.underline.italic('MongoDb Connected'));
             })
                 .catch((err) => {
                 console.log(err);
@@ -48,9 +48,9 @@ class App {
     initializeMiddleware() {
         const { SESSION } = process.env;
         this.app.use(express_1.default.json());
-        if (process.env.NODE_ENV === "production") {
+        if (process.env.NODE_ENV === 'production') {
             this.app.use((0, cors_1.default)({
-                origin: "https://orca-app-hlc5k.ondigitalocean.app",
+                origin: 'https://orca-app-hlc5k.ondigitalocean.app',
                 credentials: true,
             }));
             this.app.use((0, express_session_1.default)({
@@ -58,7 +58,7 @@ class App {
                 resave: true,
                 saveUninitialized: true,
                 cookie: {
-                    sameSite: "none",
+                    sameSite: 'none',
                     secure: true,
                     maxAge: 1000 * 60 * 60 * 24 * 7, // One Week
                 },
@@ -66,8 +66,10 @@ class App {
         }
         else {
             this.app.use((0, cors_1.default)({
-                origin: "http://localhost:3000",
-                credentials: true,
+                origin: '*',
+                methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+                preflightContinue: false,
+                optionsSuccessStatus: 204,
             }));
             this.app.use((0, express_session_1.default)({
                 secret: `${SESSION}`,
@@ -75,7 +77,7 @@ class App {
                 saveUninitialized: true,
             }));
         }
-        this.app.set("trust proxy", 1);
+        this.app.set('trust proxy', 1);
         this.app.use((0, cookie_parser_1.default)());
         this.app.use((0, morgan_1.default)(':method :url :status :res[content-length] - :response-time ms'));
         this.app.use(express_1.default.static(`${__dirname}/public`));
