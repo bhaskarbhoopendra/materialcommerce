@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const pincodeTypeSchema = new mongoose_1.default.Schema({
-    pincodeTypeName: String,
-    isSpecialState: { type: Boolean, default: false },
+const categorySchema = new mongoose_1.default.Schema({
+    categoryName: { type: String, required: true },
+    categoryImage: String,
 });
-const PincodeTypeModel = mongoose_1.default.model("pincodetype", pincodeTypeSchema);
-exports.default = PincodeTypeModel;
+const CategoryModel = mongoose_1.default.model("category", categorySchema);
+exports.default = CategoryModel;

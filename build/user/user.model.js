@@ -16,7 +16,9 @@ const userSchema = new mongoose_1.default.Schema({
     lastName: String,
     phoneNumber: String,
     source: { type: String },
-    lastVisited: { type: Date, default: new Date() }
+    lastVisited: { type: Date, default: new Date() },
+    cart: [String],
+    wishlist: [String],
 });
 exports.addressSchema = new mongoose_1.default.Schema({
     city: String,

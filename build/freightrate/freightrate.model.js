@@ -5,15 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const freightRateSchema = new mongoose_1.default.Schema({
-    zone: String,
-    pincodeType: String,
-    weightType: {
-        type: String,
-        enum: ["weight", "volumetricweight"],
-        default: "weight",
+    pincodetype: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "pincodetype",
     },
-    lowerbound: Number,
+    zone: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "zone",
+    },
+    weightType: String,
     upperbound: Number,
+    lowerbound: Number,
     rate: Number,
 });
 const FreightRateModel = mongoose_1.default.model("freightrate", freightRateSchema);
