@@ -19,7 +19,7 @@ class VendorDbManager {
   };
 
   findAllVendors = async () => {
-    return await this.vendor.find({});
+    return await this.vendor.find({}).lean();
   };
 
   findVendorByEmail = async (email: string) => {
@@ -27,7 +27,7 @@ class VendorDbManager {
   };
 
   updateVendorById = async (id: string, data: any) => {
-    return await this.vendor.findByIdAndUpdate(id, data);
+    return await this.vendor.findByIdAndUpdate(id, data, { new: true });
   };
 
   deleteVendorById = async (id: string) => {
