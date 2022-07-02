@@ -1,4 +1,5 @@
 import { ParamsDictionary } from "express-serve-static-core";
+import WarehouseDTo from "./warehouse.dto";
 import Warehouse from "./warehouse.model";
 
 class WarehouseDbManager {
@@ -6,6 +7,10 @@ class WarehouseDbManager {
   public id: string;
   public data: any;
   constructor() {}
+
+  public createWarehouse = async (data: WarehouseDTo) => {
+    return await this.warehouse.create({ ...data });
+  };
 
   public getAllWarehouse = async () => {
     return await this.warehouse.find({});

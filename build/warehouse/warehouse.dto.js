@@ -24,4 +24,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsNumber)()
 ], WarehouseDTo.prototype, "pincode", void 0);
+__decorate([
+    (0, class_validator_1.IsString)()
+], WarehouseDTo.prototype, "vendor", void 0);
 exports.default = WarehouseDTo;

@@ -26,13 +26,13 @@ const vendorSchema = new mongoose.Schema({
   warehouse: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Warehouse",
+      ref: "warehouse",
     },
   ],
 });
 
 const VendorModel = mongoose.model<Ivendor & mongoose.Document>(
-  "Vendor",
+  "vendor",
   vendorSchema
 );
 

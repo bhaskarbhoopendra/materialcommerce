@@ -42,7 +42,7 @@ async function confirmedVendorMiddleware(request, response, next) {
             const vendor = await vendor_model_1.default.findById(id);
             if (!vendor)
                 throw new VendorNotFoundException_1.default(id);
-            if (vendor.isConfirmedVendor !== enums_vendor_1.default.CONFIRMED)
+            if (vendor && vendor.isConfirmedVendor !== enums_vendor_1.default.CONFIRMED)
                 throw new wrongAuthenticationTokenException_1.default();
             request.user = vendor;
             next();

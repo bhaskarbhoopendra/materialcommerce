@@ -1,21 +1,23 @@
-import { IsNumber, IsString } from "class-validator"
+import { IsNumber, IsString } from "class-validator";
 
 class WarehouseDTo {
-    @IsString()
-    warehouseName: string;
-    
-    @IsString()
-    address: string;
+  @IsString()
+  warehouseName: string;
 
-    @IsString()
-    city: string;
+  @IsString()
+  address: string;
 
-    @IsString()
-    street: string;
-    
-    @IsNumber()    
-    pincode : number;
+  @IsString()
+  city: string;
+
+  @IsString()
+  street: string;
+
+  @IsNumber()
+  pincode: number;
+
+  @IsString()
+  vendor: string;
 }
 
-
-export default WarehouseDTo
+export default WarehouseDTo;

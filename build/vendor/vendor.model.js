@@ -28,9 +28,9 @@ const vendorSchema = new mongoose_1.default.Schema({
     warehouse: [
         {
             type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: "Warehouse",
+            ref: "warehouse",
         },
     ],
 });
-const VendorModel = mongoose_1.default.model("Vendor", vendorSchema);
+const VendorModel = mongoose_1.default.model("vendor", vendorSchema);
 exports.default = VendorModel;
