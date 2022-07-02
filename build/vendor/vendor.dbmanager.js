@@ -14,13 +14,13 @@ class VendorDbManager {
             return await this.vendor.findById(id);
         };
         this.findAllVendors = async () => {
-            return await this.vendor.find({});
+            return await this.vendor.find({}).lean();
         };
         this.findVendorByEmail = async (email) => {
             return await this.vendor.findOne({ email: email });
         };
         this.updateVendorById = async (id, data) => {
-            return await this.vendor.findByIdAndUpdate(id, data);
+            return await this.vendor.findByIdAndUpdate(id, data, { new: true });
         };
         this.deleteVendorById = async (id) => {
             return await this.vendor.findByIdAndDelete(id);
