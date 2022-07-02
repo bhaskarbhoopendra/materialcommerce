@@ -36,6 +36,12 @@ class CategoryController implements Controller {
     );
 
     this.router.get(`${this.path}`, adminMiddleware, this.getAllCategory);
+
+    this.router.post(
+      `${this.path}/addsubcategory/:subcategoryId`,
+      adminMiddleware,
+      this.nestSubcategory
+    );
   }
 
   private async createCategory(
@@ -103,6 +109,15 @@ class CategoryController implements Controller {
       response.send(error);
     }
   }
+
+  private nestSubcategory = (request: Request, response: Response) => {
+    try {
+      const subcategoryID: string = request.params.subcategoryId;
+      const nestCategorywithSubCateogry = {
+        subcategory: subcategoryID,
+      };
+    } catch (error) {}
+  };
 }
 
 export default CategoryController;

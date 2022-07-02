@@ -13,6 +13,15 @@ class CategoryController {
         this.path = "/category";
         this.router = (0, express_1.Router)();
         this.upload = (0, multer_1.default)({ storage: multer_2.fileStorage, fileFilter: multer_2.fileFilter });
+        this.nestSubcategory = (request, response) => {
+            try {
+                const subcategoryID = request.params.subcategoryId;
+                const nestCategorywithSubCateogry = {
+                    subcategory: subcategoryID,
+                };
+            }
+            catch (error) { }
+        };
         this.initializeRoutes();
     }
     initializeRoutes() {
@@ -20,6 +29,7 @@ class CategoryController {
         this.router.put(`${this.path}/update/:categoryId`, admin_middleware_1.default, this.upload.single("categoryImage"), this.updateCategory);
         this.router.delete(`${this.path}/delete/:categoryId`, admin_middleware_1.default, this.deleteCategory);
         this.router.get(`${this.path}`, admin_middleware_1.default, this.getAllCategory);
+        this.router.post(`${this.path}/addsubcategory/:subcategoryId`, admin_middleware_1.default, this.nestSubcategory);
     }
     async createCategory(request, response) {
         var _a;
