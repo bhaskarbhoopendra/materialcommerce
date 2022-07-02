@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import ICategory from "./category.interface";
 
 const categorySchema = new mongoose.Schema({
-  categoryName: { type: String, required: true },
+  categoryName: String,
   categoryImage: String,
   subcategory: {
     type: mongoose.Schema.Types.ObjectId,
