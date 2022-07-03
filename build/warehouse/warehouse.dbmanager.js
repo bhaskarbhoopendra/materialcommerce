@@ -7,8 +7,11 @@ const warehouse_model_1 = __importDefault(require("./warehouse.model"));
 class WarehouseDbManager {
     constructor() {
         this.warehouse = warehouse_model_1.default;
+        this.createWarehouse = async (data) => {
+            return await this.warehouse.create(Object.assign({}, data));
+        };
         this.getAllWarehouse = async () => {
-            return await this.warehouse.find({});
+            return await this.warehouse.find({}).populate("vendor");
         };
         this.warehouseByID = async (id) => {
             return await this.warehouse.findById(id);
