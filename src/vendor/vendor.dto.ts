@@ -2,8 +2,21 @@ import VerifiedStatus from "../enums/enums.vendor";
 import UserDTO from "../user/user.dto";
 import { IsString, IsEnum, IsBoolean, IsOptional } from "class-validator";
 
+class vendorDto {
+  @IsString()
+  id?: string;
 
-class vendorDto extends UserDTO {
+  @IsString()
+  firstName: string;
+
+  @IsString()
+  lastName: string;
+
+  @IsString()
+  email: string;
+
+  @IsString()
+  password: string;
 
   @IsString()
   organisation: string;
@@ -20,8 +33,6 @@ class vendorDto extends UserDTO {
   @IsOptional()
   @IsString()
   warehouse: string;
-
-
 }
 
 export default vendorDto;

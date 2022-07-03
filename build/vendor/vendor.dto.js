@@ -10,10 +10,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const enums_vendor_1 = __importDefault(require("../enums/enums.vendor"));
-const user_dto_1 = __importDefault(require("../user/user.dto"));
 const class_validator_1 = require("class-validator");
-class vendorDto extends user_dto_1.default {
+class vendorDto {
 }
+__decorate([
+    (0, class_validator_1.IsString)()
+], vendorDto.prototype, "id", void 0);
+__decorate([
+    (0, class_validator_1.IsString)()
+], vendorDto.prototype, "firstName", void 0);
+__decorate([
+    (0, class_validator_1.IsString)()
+], vendorDto.prototype, "lastName", void 0);
+__decorate([
+    (0, class_validator_1.IsString)()
+], vendorDto.prototype, "email", void 0);
+__decorate([
+    (0, class_validator_1.IsString)()
+], vendorDto.prototype, "password", void 0);
 __decorate([
     (0, class_validator_1.IsString)()
 ], vendorDto.prototype, "organisation", void 0);

@@ -1,12 +1,14 @@
 import { Router, Request, Response } from "express";
 import Controller from "../../interfaces/controller.interface";
 import WarehouseDTo from "../../warehouse/warehouse.dto";
+import VendorDbManager from "../vendor.dbmanager";
 import VendorWarehouseService from "./vendor.warehouse.service";
 
 class VendorWarehouseController implements Controller {
   path = "/vendor/warehouse";
   router = Router();
   vendorWarehouseService = new VendorWarehouseService();
+  vendorDbManager = new VendorDbManager();
 
   constructor() {
     this.initalizeRoutes();
@@ -28,6 +30,8 @@ class VendorWarehouseController implements Controller {
           vendorId,
           warehouseData
         );
+      const vendor = await this.vendorDbManager.findVendorById(vendorId);
+      vendor?.warehouse?.push(vendorCreatedWarehouse);
       response.send(vendorCreatedWarehouse);
     } catch (error) {
       response.send(error);

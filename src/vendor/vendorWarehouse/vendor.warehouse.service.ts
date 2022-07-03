@@ -1,8 +1,10 @@
 import WarehouseDbManager from "../../warehouse/warehouse.dbmanager";
 import WarehouseDTo from "../../warehouse/warehouse.dto";
+import VendorDbManager from "../vendor.dbmanager";
 
 class VendorWarehouseService {
   warehouseDbManager = new WarehouseDbManager();
+  vendorDbManager = new VendorDbManager();
   constructor() {}
 
   public vendorCreateWarehouseService = async (

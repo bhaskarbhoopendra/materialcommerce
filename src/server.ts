@@ -11,6 +11,7 @@ import ZoneController from "./freightrate/zone/zone.controller";
 import GoogleAuthController from "./googleauth/googleauth.controller";
 import ProductController from "./product/product.controller";
 import VendorAuthenticationController from "./vendor/vendor.authentication.controller";
+import VendorWarehouseController from "./vendor/vendorWarehouse/vendor.warehouse.controller";
 import WarehouseController from "./warehouse/warehouse.controller";
 
 const app = new App([
@@ -26,6 +27,7 @@ const app = new App([
   new FreightRateController(),
   new CategoryController(),
   new SubCategoryController(),
+  new VendorWarehouseController(),
 ]);
 
 app.listen();

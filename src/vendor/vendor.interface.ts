@@ -1,11 +1,16 @@
-import IUser from "../user/user.interface";
+import Iwarehouse from "../warehouse/warehouse.interface";
 
-interface Ivendor extends IUser {
+interface Ivendor {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
   organization?: string;
   company?: string;
   isVendor?: boolean;
   isConfirmedVendor?: string;
-  warehouse?: string[];
+  warehouse?: Iwarehouse[];
 }
 
 export default Ivendor;
