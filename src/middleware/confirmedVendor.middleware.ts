@@ -7,30 +7,30 @@ import WrongAuthenticationTokenException from "../exceptions/wrongAuthentication
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
 import VerifiedStatus from "../enums/enums.vendor";
 import vendorModel from "../vendor/vendor.model";
-import { AnyRecord } from "dns";
-import Ivendor from "../vendor/vendor.interface";
 
 async function confirmedVendorMiddleware(
   request: Request,
   response: Response,
   next: NextFunction
 ) {
-
   const cookies = request.cookies;
   if (cookies && cookies.Authentication) {
     const { JWT_SECRET } = process.env;
     try {
-      const verificationResponse = jwt.verify(`${JWT_SECRET}`, cookies.Authorization) as DataStoredInToken;
+      const verificationResponse = jwt.verify(
+        `${JWT_SECRET}`,
+        cookies.Authorization
+      ) as DataStoredInToken;
       const id = verificationResponse._id;
       const vendor: any = await vendorModel.findById(id);
       if (!vendor) throw new VendorNotFoundException(id);
-      if (vendor.isConfirmedVendor !== VerifiedStatus.CONFIRMED) throw new WrongAuthenticationTokenException();
+      if (vendor.isConfirmedVendor !== VerifiedStatus.CONFIRMED)
+        throw new WrongAuthenticationTokenException();
       request.user = vendor;
       next();
     } catch (error) {
       return error;
     }
-
   } else {
     next(new AuthenticationTokenMissingException());
   }

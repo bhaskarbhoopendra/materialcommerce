@@ -6,8 +6,12 @@ const warehouseSchema = new mongoose.Schema({
   address: addressSchema,
   warehouseName: String,
   isVerifiedWarehouse: { enum: ["confirmed", "pending"] },
+  vendor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "vendor",
+  },
 });
 
-const Warehouse = mongoose.model<Iwarehouse>("Warehouse", warehouseSchema);
+const Warehouse = mongoose.model<Iwarehouse>("warehouse", warehouseSchema);
 
 export default Warehouse;

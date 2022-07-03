@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Ivendor from "./vendor.interface";
 
 const addressSchema = new mongoose.Schema({
   addressType: { enum: ["billing", "shipping"] },
@@ -26,14 +25,12 @@ const vendorSchema = new mongoose.Schema({
   warehouse: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Warehouse",
+      ref: "warehouse",
     },
   ],
+  phoneNumber: Number,
 });
 
-const VendorModel = mongoose.model<Ivendor & mongoose.Document>(
-  "Vendor",
-  vendorSchema
-);
+const VendorModel = mongoose.model<mongoose.Document>("vendor", vendorSchema);
 
 export default VendorModel;
