@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv/config");
 const admin_controller_1 = __importDefault(require("./admin/admin.controller"));
 const adminAuthentication_controller_1 = __importDefault(require("./admin/adminAuthentication/adminAuthentication.controller"));
+const admin_vendor_warehouse_controller_1 = __importDefault(require("./admin/adminVendorWarehouse/admin.vendor.warehouse.controller"));
 const app_1 = __importDefault(require("./app"));
 const authentication_controller_1 = __importDefault(require("./authentication/authentication.controller"));
 const category_controller_1 = __importDefault(require("./categories/category/category.controller"));
@@ -32,5 +33,6 @@ const app = new app_1.default([
     new category_controller_1.default(),
     new subcateogry_controller_1.default(),
     new vendor_warehouse_controller_1.default(),
+    new admin_vendor_warehouse_controller_1.default(),
 ]);
 app.listen();
