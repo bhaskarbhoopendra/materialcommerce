@@ -16,6 +16,7 @@ const zone_controller_1 = __importDefault(require("./freightrate/zone/zone.contr
 const googleauth_controller_1 = __importDefault(require("./googleauth/googleauth.controller"));
 const product_controller_1 = __importDefault(require("./product/product.controller"));
 const vendor_authentication_controller_1 = __importDefault(require("./vendor/vendor.authentication.controller"));
+const vendor_warehouse_controller_1 = __importDefault(require("./vendor/vendorWarehouse/vendor.warehouse.controller"));
 const warehouse_controller_1 = __importDefault(require("./warehouse/warehouse.controller"));
 const app = new app_1.default([
     new googleauth_controller_1.default(),
@@ -30,5 +31,6 @@ const app = new app_1.default([
     new freightrate_controller_1.default(),
     new category_controller_1.default(),
     new subcateogry_controller_1.default(),
+    new vendor_warehouse_controller_1.default(),
 ]);
 app.listen();
