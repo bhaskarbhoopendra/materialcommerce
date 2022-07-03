@@ -1,5 +1,4 @@
 import vendorDto from "./vendor.dto";
-import Ivendor from "./vendor.interface";
 import VendorModel from "./vendor.model";
 
 class VendorDbManager {

@@ -1,11 +1,17 @@
-import IUser from "../user/user.interface";
+// interface Base {
+//   organization?: string;
+//   company?: string;
+//   isVendor?: boolean;
+//   isConfirmedVendor?: string;
+//   warehouse?: string[];
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   phoneNumber: number;
+// }
 
-interface Ivendor extends IUser {
-  organization?: string;
-  company?: string;
-  isVendor?: boolean;
-  isConfirmedVendor?: string;
-  warehouse?: string[];
-}
+// interface Ivendor extends Base {
+//   _id: string;
+// }
 
-export default Ivendor;
+// export default Ivendor;

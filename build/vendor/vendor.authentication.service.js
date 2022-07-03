@@ -48,7 +48,7 @@ class VendorService {
             const cookie = this.createCookie(tokenData);
             return {
                 createdVendor,
-                cookie
+                cookie,
             };
         };
         this.login = async (userCred) => {
@@ -66,7 +66,7 @@ class VendorService {
                 return {
                     tokenData,
                     cookie,
-                    vendor
+                    vendor,
                 };
             }
             catch (error) {
@@ -79,13 +79,12 @@ class VendorService {
             const dataStoredInToken = { _id: createdVendor._id };
             return {
                 expiresIn,
-                token: jwt.sign(dataStoredInToken, `${JWT_SECRET}`, { expiresIn })
+                token: jwt.sign(dataStoredInToken, `${JWT_SECRET}`, { expiresIn }),
             };
         };
         this.createCookie = (tokenData) => {
             return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn} `;
         };
     }
-    ;
 }
 exports.default = VendorService;
