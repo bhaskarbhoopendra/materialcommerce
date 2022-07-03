@@ -1,6 +1,7 @@
 import "dotenv/config";
 import AdminController from "./admin/admin.controller";
 import AdminAuthenticationController from "./admin/adminAuthentication/adminAuthentication.controller";
+import AdminVendorWarehouseController from "./admin/adminVendorWarehouse/admin.vendor.warehouse.controller";
 import App from "./app";
 import AuthenticationController from "./authentication/authentication.controller";
 import CategoryController from "./categories/category/category.controller";
@@ -28,6 +29,7 @@ const app = new App([
   new CategoryController(),
   new SubCategoryController(),
   new VendorWarehouseController(),
+  new AdminVendorWarehouseController(),
 ]);
 
 app.listen();
