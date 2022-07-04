@@ -8,36 +8,34 @@ import * as jwt from "jsonwebtoken";
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
 import WrongCredentialsException from "../exceptions/wrongCredentialsException";
 import loginDto from "./login.dto";
+import UserDTO from "../user/user.dto";
 class AuthenticationService {
   user = UserModel;
   userDbManager = new UserDbManager();
 
-  constructor() { }
+  constructor() {}
 
-  register = async (userData: any): Promise<any> => {
-    try {
-      const email = userData.email;
-      const password = userData.password;
-      if (await this.user.findOne({ email }))
-        throw new UserWithThatEmailAlreadyExistsException(email);
+  register = async (data: UserDTO): Promise<any> => {
+    const email = data.email;
+    const foundUser = await this.user.findOne({ email: email });
 
-      const hashedPassword = await bcrypt.hash(password, 10);
+    if (foundUser) throw new UserWithThatEmailAlreadyExistsException(email);
 
-      const user: IUser = await this.userDbManager.createUser({
-        ...userData,
-        password: hashedPassword,
-      });
+    const password = data.password;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-      const tokenData: TokenData = this.createToken(user);
-      const cookie = this.createCookie(tokenData);
+    const newUser = {
+      ...data,
+      password: hashedPassword,
+    };
 
-      return {
-        user,
-        cookie,
-      };
-    } catch (error) {
-      return error;
-    }
+    const user = await this.user.create({ ...newUser });
+
+    const tokenData = this.createToken(user);
+    return {
+      user,
+      tokenData,
+    };
   };
 
   login = async (userCred: loginDto): Promise<any> => {
@@ -47,7 +45,10 @@ class AuthenticationService {
     const user = await this.user.findOne({ email });
     if (!user) throw new WrongCredentialsException();
 
-    const comparePasswords = await bcrypt.compare(password, user.get("password", null, { getters: false }));
+    const comparePasswords = await bcrypt.compare(
+      password,
+      user.get("password", null, { getters: false })
+    );
 
     if (!comparePasswords) throw new WrongCredentialsException();
 

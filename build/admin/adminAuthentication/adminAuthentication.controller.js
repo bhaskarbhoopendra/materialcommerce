@@ -57,7 +57,12 @@ class AdminAuthenticationController {
                     const isPasswordMatching = await bcryptjs_1.default.compare(logInData.password, admin.get("password", null, { getters: false }));
                     if (isPasswordMatching) {
                         const tokenData = this.createToken(admin);
-                        response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+                        const cookie = this.createCookie(tokenData);
+                        // response.setHeader("Set-Cookie", [cookie]);
+                        response.cookie("Authorization", `${tokenData.token}`, {
+                            expires: new Date(Date.now() + 900000),
+                            httpOnly: true,
+                        });
                         response.send({ tokenData, admin });
                     }
                     else {
@@ -89,7 +94,8 @@ class AdminAuthenticationController {
         this.router.post(`${this.path}/logout`, this.adminLogout);
     }
     createCookie(tokenData) {
-        return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
+        const value = true;
+        return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
     }
     createToken(admin) {
         const expiresIn = 60 * 60; // an hour
@@ -103,4 +109,20 @@ class AdminAuthenticationController {
         };
     }
 }
+// router.get('/vendor-requests', async (req, res) => {
+//   try {
+//     // Vendors who have been confirmed
+//     const confirmedVendorData = await NewVendor.find({ confirmed: true }).select('name email address phoneNumber GST company')
+//     // Vendors who have not been confirmed
+//     const unconfirmedVendorData = await NewVendor.find({ confirmed: false }).select('name email address phoneNumber GST company')
+//     const vendorRequestData = {
+//       confirmed: confirmedVendorData,
+//       unconfirmed: unconfirmedVendorData
+//     }
+//     res.status(200).json(vendorRequestData)
+//   } catch (e) {
+//     console.error(e.message)
+//     res.status(500).send('Server error')
+//   }
+// })
 exports.default = AdminAuthenticationController;
