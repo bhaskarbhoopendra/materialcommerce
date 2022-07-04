@@ -35,15 +35,19 @@ class VendorDbManager {
   };
 
   confirmedVendor = async () => {
-    return await this.vendor.find({
-      isConfirmedVendor: VerifiedStatus.CONFIRMED,
-    });
+    return await this.vendor
+      .find({
+        isConfirmedVendor: VerifiedStatus.CONFIRMED,
+      })
+      .lean();
   };
 
   unconfrimedVendors = async () => {
-    return await this.vendor.find({
-      isConfirmedVendor: VerifiedStatus.PENDING,
-    });
+    return await this.vendor
+      .find({
+        isConfirmedVendor: VerifiedStatus.PENDING,
+      })
+      .lean();
   };
 }
 
