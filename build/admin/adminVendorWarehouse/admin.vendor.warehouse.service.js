@@ -37,6 +37,11 @@ class AdminVendorWarehouseService {
                 }
             }
         };
+        this.getAllVendorsService = async () => {
+            const confrimedVendors = await this.vendorDbManager.confirmedVendor();
+            const unconfrimedVendors = await this.vendorDbManager.unconfrimedVendors();
+            return { unconfrimedVendors, confrimedVendors };
+        };
     }
 }
 exports.default = AdminVendorWarehouseService;

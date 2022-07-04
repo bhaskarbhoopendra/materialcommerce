@@ -1,3 +1,4 @@
+import VerifiedStatus from "../enums/enums.vendor";
 import vendorDto from "./vendor.dto";
 import VendorModel from "./vendor.model";
 
@@ -31,6 +32,18 @@ class VendorDbManager {
 
   deleteVendorById = async (id: string) => {
     return await this.vendor.findByIdAndDelete(id);
+  };
+
+  confirmedVendor = async () => {
+    return await this.vendor.find({
+      isConfirmedVendor: VerifiedStatus.CONFIRMED,
+    });
+  };
+
+  unconfrimedVendors = async () => {
+    return await this.vendor.find({
+      isConfirmedVendor: VerifiedStatus.PENDING,
+    });
   };
 }
 

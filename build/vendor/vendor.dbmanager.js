@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const enums_vendor_1 = __importDefault(require("../enums/enums.vendor"));
 const vendor_model_1 = __importDefault(require("./vendor.model"));
 class VendorDbManager {
     constructor() {
@@ -24,6 +25,16 @@ class VendorDbManager {
         };
         this.deleteVendorById = async (id) => {
             return await this.vendor.findByIdAndDelete(id);
+        };
+        this.confirmedVendor = async () => {
+            return await this.vendor.find({
+                isConfirmedVendor: enums_vendor_1.default.CONFIRMED,
+            });
+        };
+        this.unconfrimedVendors = async () => {
+            return await this.vendor.find({
+                isConfirmedVendor: enums_vendor_1.default.PENDING,
+            });
         };
     }
 }
