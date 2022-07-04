@@ -15,9 +15,8 @@ class VendorService {
   constructor() {}
 
   register = async (data: vendorDto) => {
-    const email = data.email;
+    const { email } = data;
     const vendor = await this.vendor.findOne({ email: email });
-
     if (vendor) throw new UserWithThatEmailAlreadyExistsException(email);
 
     const password = data.password;

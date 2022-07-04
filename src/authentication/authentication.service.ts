@@ -16,21 +16,15 @@ class AuthenticationService {
   constructor() {}
 
   register = async (data: UserDTO): Promise<any> => {
-    const email = data.email;
+    const { email, password } = data;
     const foundUser = await this.user.findOne({ email: email });
-
     if (foundUser) throw new UserWithThatEmailAlreadyExistsException(email);
-
-    const password = data.password;
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const newUser = {
       ...data,
       password: hashedPassword,
     };
-
     const user = await this.user.create({ ...newUser });
-
     const tokenData = this.createToken(user);
     return {
       user,
@@ -38,24 +32,16 @@ class AuthenticationService {
     };
   };
 
-  login = async (userCred: loginDto): Promise<any> => {
-    const email: string = userCred.email;
-    const password: string = userCred.password;
-
+  login = async (userData: loginDto): Promise<any> => {
+    const { email, password } = userData;
     const user = await this.user.findOne({ email });
     if (!user) throw new WrongCredentialsException();
-
     const comparePasswords = await bcrypt.compare(
       password,
       user.get("password", null, { getters: false })
     );
-
-    if (!comparePasswords) throw new WrongCredentialsException();
-
     const tokenData = this.createToken(user);
-    const cookie = this.createCookie(tokenData);
-
-    return { user, tokenData, cookie };
+    return { user, tokenData };
   };
 
   createToken = (user: IUser) => {

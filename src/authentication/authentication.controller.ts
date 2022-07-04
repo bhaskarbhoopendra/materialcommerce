@@ -33,8 +33,9 @@ class AuthenticationController implements Controller {
   ) => {
     try {
       const data: userDto = request.body;
-      const { cookie, user, tokenData } =
-        await this.authenticationService.register(data);
+      const { user, tokenData } = await this.authenticationService.register(
+        data
+      );
       response.cookie("Authorization", `${tokenData.token}`, {
         expires: new Date(Date.now() + 900000),
         httpOnly: true,
@@ -46,21 +47,15 @@ class AuthenticationController implements Controller {
   };
 
   private userLogin = async (request: Request, response: Response) => {
-    const loginCred: loginDto = request.body;
+    const userData: loginDto = request.body;
     try {
-      const email = loginCred.email;
-      const password = loginCred.password;
-      if (
-        email === null ||
-        email === undefined ||
-        password === null ||
-        password === undefined
-      )
-        response.send("invalid input");
-      const { user, cookie, tokenData } =
-        await this.authenticationService.login(loginCred);
-
-      response.setHeader("Set-Cookie", [cookie]);
+      const { user, tokenData } = await this.authenticationService.login(
+        userData
+      );
+      response.cookie("Authorization", `${tokenData.token}`, {
+        expires: new Date(Date.now() + 900000),
+        httpOnly: true,
+      });
       response.send({ user });
     } catch (error) {
       return error;

@@ -37,7 +37,7 @@ class VendorService {
         this.vendorDbManager = new vendor_dbmanager_1.default();
         this.vendor = vendor_model_1.default;
         this.register = async (data) => {
-            const email = data.email;
+            const { email } = data;
             const vendor = await this.vendor.findOne({ email: email });
             if (vendor)
                 throw new userWithThatEmailAlreadyExistsException_1.default(email);
