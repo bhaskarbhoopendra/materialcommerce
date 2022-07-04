@@ -27,14 +27,18 @@ class VendorDbManager {
             return await this.vendor.findByIdAndDelete(id);
         };
         this.confirmedVendor = async () => {
-            return await this.vendor.find({
+            return await this.vendor
+                .find({
                 isConfirmedVendor: enums_vendor_1.default.CONFIRMED,
-            });
+            })
+                .lean();
         };
         this.unconfrimedVendors = async () => {
-            return await this.vendor.find({
+            return await this.vendor
+                .find({
                 isConfirmedVendor: enums_vendor_1.default.PENDING,
-            });
+            })
+                .lean();
         };
     }
 }
