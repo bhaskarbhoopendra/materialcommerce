@@ -17,7 +17,11 @@ const vendorSchema = new mongoose.Schema({
   organization: String,
   company: String,
   isVendor: Boolean,
-  isConfirmedVendor: { enum: ["confirmed", "pending"] },
+  isConfirmedVendor: {
+    type: String,
+    enum: ["confirmed", "pending"],
+    default: "pending",
+  },
   password: {
     type: String,
     get: (): undefined => undefined,

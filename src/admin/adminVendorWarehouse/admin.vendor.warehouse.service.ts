@@ -38,4 +38,10 @@ export default class AdminVendorWarehouseService {
       }
     }
   };
+
+  getAllVendorsService = async () => {
+    const confrimedVendors = await this.vendorDbManager.confirmedVendor();
+    const unconfrimedVendors = await this.vendorDbManager.unconfrimedVendors();
+    return { unconfrimedVendors, confrimedVendors };
+  };
 }

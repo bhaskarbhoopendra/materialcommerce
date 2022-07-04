@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import Controller from "../../interfaces/controller.interface";
+import adminMiddleware from "../../middleware/admin.middleware";
 import AdminVendorWarehouseService from "./admin.vendor.warehouse.service";
 
 class AdminVendorWarehouseController implements Controller {
@@ -14,7 +15,13 @@ class AdminVendorWarehouseController implements Controller {
   private initializeRoutes() {
     this.router.get(
       `${this.path}/verify/:vendorId/:warehouseId`,
+      adminMiddleware,
       this.adminVerifyVendorsWarehouse
+    );
+    this.router.get(
+      `${this.path}/confrimed/unconfrimedvendor`,
+      adminMiddleware,
+      this.allVendors
     );
   }
 
@@ -31,6 +38,17 @@ class AdminVendorWarehouseController implements Controller {
           warehouseId
         );
       response.send(verifiedWarehouse);
+    } catch (error) {
+      response.send(error);
+    }
+  };
+
+  private allVendors = async (request: Request, response: Response) => {
+    try {
+      const { unconfrimedVendors, confrimedVendors } =
+        await this.adminVendorWarehouseService.getAllVendorsService();
+
+      response.send({ unconfrimedVendors, confrimedVendors });
     } catch (error) {
       response.send(error);
     }

@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const admin_middleware_1 = __importDefault(require("../../middleware/admin.middleware"));
 const admin_vendor_warehouse_service_1 = __importDefault(require("./admin.vendor.warehouse.service"));
 class AdminVendorWarehouseController {
     constructor() {
@@ -21,10 +22,20 @@ class AdminVendorWarehouseController {
                 response.send(error);
             }
         };
+        this.allVendors = async (request, response) => {
+            try {
+                const { unconfrimedVendors, confrimedVendors } = await this.adminVendorWarehouseService.getAllVendorsService();
+                response.send({ unconfrimedVendors, confrimedVendors });
+            }
+            catch (error) {
+                response.send(error);
+            }
+        };
         this.initializeRoutes();
     }
     initializeRoutes() {
-        this.router.get(`${this.path}/verify/:vendorId/:warehouseId`, this.adminVerifyVendorsWarehouse);
+        this.router.get(`${this.path}/verify/:vendorId/:warehouseId`, admin_middleware_1.default, this.adminVerifyVendorsWarehouse);
+        this.router.get(`${this.path}/confrimed/unconfrimedvendor`, admin_middleware_1.default, this.allVendors);
     }
 }
 exports.default = AdminVendorWarehouseController;
