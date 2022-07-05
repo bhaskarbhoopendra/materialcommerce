@@ -23,6 +23,11 @@ class AdminVendorWarehouseController implements Controller {
       adminMiddleware,
       this.allVendors
     );
+    this.router.delete(
+      `${this.path}/:vendorId`,
+      adminMiddleware,
+      this.deleteOneVendor
+    );
   }
 
   private adminVerifyVendorsWarehouse = async (
@@ -52,6 +57,16 @@ class AdminVendorWarehouseController implements Controller {
     } catch (error) {
       response.send(error);
     }
+  };
+
+  private deleteOneVendor = async (request: Request, response: Response) => {
+    try {
+      const vendorId = request.params.vendorId;
+      if (vendorId == undefined) response.send("vendor id not found");
+      const deletedVendor =
+        await this.adminVendorWarehouseService.deleteOneVendorService(vendorId);
+      response.send(deletedVendor);
+    } catch (error) {}
   };
 }
 
