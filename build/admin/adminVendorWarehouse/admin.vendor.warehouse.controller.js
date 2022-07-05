@@ -12,8 +12,9 @@ class AdminVendorWarehouseController {
         this.router = (0, express_1.Router)();
         this.adminVendorWarehouseService = new admin_vendor_warehouse_service_1.default();
         this.adminVerifyVendorsWarehouse = async (request, response) => {
-            const vendorId = request.params.vendorId;
-            const warehouseId = request.params.warehouseId;
+            // const vendorId: string = request.params.vendorId;
+            // const warehouseId: string = request.params.warehouseId;
+            const { vendorId, warehouseId } = request.params;
             try {
                 const verifiedWarehouse = await this.adminVendorWarehouseService.verifyVendorsWarehouse(vendorId, warehouseId);
                 response.send(verifiedWarehouse);

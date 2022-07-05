@@ -116,7 +116,9 @@ class CategoryController implements Controller {
       const nestCategorywithSubCateogry = {
         subcategory: subcategoryID,
       };
-    } catch (error) {}
+    } catch (error) {
+      response.send(error);
+    }
   };
 }
 

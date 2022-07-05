@@ -20,7 +20,9 @@ class CategoryController {
                     subcategory: subcategoryID,
                 };
             }
-            catch (error) { }
+            catch (error) {
+                response.send(error);
+            }
         };
         this.initializeRoutes();
     }
