@@ -31,11 +31,22 @@ class AdminVendorWarehouseController {
                 response.send(error);
             }
         };
+        this.deleteOneVendor = async (request, response) => {
+            try {
+                const vendorId = request.params.vendorId;
+                if (vendorId == undefined)
+                    response.send("vendor id not found");
+                const deletedVendor = await this.adminVendorWarehouseService.deleteOneVendorService(vendorId);
+                response.send(deletedVendor);
+            }
+            catch (error) { }
+        };
         this.initializeRoutes();
     }
     initializeRoutes() {
         this.router.get(`${this.path}/verify/:vendorId/:warehouseId`, admin_middleware_1.default, this.adminVerifyVendorsWarehouse);
         this.router.get(`${this.path}/confrimed/unconfrimedvendor`, admin_middleware_1.default, this.allVendors);
+        this.router.delete(`${this.path}/:vendorId`, admin_middleware_1.default, this.deleteOneVendor);
     }
 }
 exports.default = AdminVendorWarehouseController;

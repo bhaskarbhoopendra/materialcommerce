@@ -42,6 +42,10 @@ class AdminVendorWarehouseService {
             const unconfrimedVendors = await this.vendorDbManager.unconfrimedVendors();
             return { unconfrimedVendors, confrimedVendors };
         };
+        this.deleteOneVendorService = async (vendorId) => {
+            const deletedVendor = await this.vendorDbManager.deleteVendorById(vendorId);
+            return "Vendor Deleted";
+        };
     }
 }
 exports.default = AdminVendorWarehouseService;
