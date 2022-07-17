@@ -34,8 +34,10 @@ class AdminVendorWarehouseController implements Controller {
     request: Request,
     response: Response
   ) => {
-    const vendorId: string = request.params.vendorId;
-    const warehouseId: string = request.params.warehouseId;
+    // const vendorId: string = request.params.vendorId;
+    // const warehouseId: string = request.params.warehouseId;
+
+    const { vendorId, warehouseId } = request.params;
     try {
       const verifiedWarehouse =
         await this.adminVendorWarehouseService.verifyVendorsWarehouse(
@@ -61,7 +63,7 @@ class AdminVendorWarehouseController implements Controller {
 
   private deleteOneVendor = async (request: Request, response: Response) => {
     try {
-      const vendorId = request.params.vendorId;
+      const vendorId: string = request.params.vendorId;
       if (vendorId == undefined) response.send("vendor id not found");
       const deletedVendor =
         await this.adminVendorWarehouseService.deleteOneVendorService(vendorId);

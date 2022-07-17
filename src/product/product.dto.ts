@@ -1,6 +1,29 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsBoolean, IsNumber, IsString } from "class-validator";
 
-export default class ProductDTO {
+class BaseProductAvailability {
+  @IsBoolean()
+  isAreaCalculate: boolean;
+
+  @IsBoolean()
+  isCancelable: boolean;
+
+  @IsBoolean()
+  isRefundable: boolean;
+
+  @IsBoolean()
+  isReturnable: boolean;
+
+  @IsBoolean()
+  cashOnDeliverry: boolean;
+
+  @IsBoolean()
+  isOfferAvailable: boolean;
+
+  @IsBoolean()
+  isDeliveryChargeApplicable: boolean;
+}
+
+export default class ProductDTO extends BaseProductAvailability {
   @IsString()
   productName: string;
 
@@ -65,7 +88,7 @@ export default class ProductDTO {
   madeIn: string;
 
   @IsString()
-  image: string;
+  image: string[];
 
   @IsString()
   description: string;

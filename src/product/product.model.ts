@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema({
   maximumQuantity: Number,
   manufacturer: String,
   madeIn: String,
-  image: String,
+  image: [String],
   description: String,
   isAreaCalculate: Boolean,
   isCancelable: Boolean,
