@@ -7,7 +7,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const class_validator_1 = require("class-validator");
-class ProductDTO {
+class BaseProductAvailability {
+}
+__decorate([
+    (0, class_validator_1.IsBoolean)()
+], BaseProductAvailability.prototype, "isAreaCalculate", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)()
+], BaseProductAvailability.prototype, "isCancelable", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)()
+], BaseProductAvailability.prototype, "isRefundable", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)()
+], BaseProductAvailability.prototype, "isReturnable", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)()
+], BaseProductAvailability.prototype, "cashOnDeliverry", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)()
+], BaseProductAvailability.prototype, "isOfferAvailable", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)()
+], BaseProductAvailability.prototype, "isDeliveryChargeApplicable", void 0);
+class ProductDTO extends BaseProductAvailability {
 }
 __decorate([
     (0, class_validator_1.IsString)()
