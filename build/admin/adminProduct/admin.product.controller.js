@@ -17,12 +17,12 @@ class AdminProductController {
         this.createProduct = async (request, response) => {
             try {
                 const productData = request.body;
-                const imagePath = request.files;
+                const files = request.files;
                 if (!productData)
                     response.sendStatus(400).json({ message: "No data in body" });
-                if (!imagePath)
+                if (!files)
                     response.sendStatus(400).json({ message: "No File in body" });
-                const product = this.adminProductService.createProduct();
+                const product = await this.adminProductService.createProduct(productData, files);
                 response.send(product);
             }
             catch (error) {

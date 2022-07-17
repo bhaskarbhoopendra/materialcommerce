@@ -3,6 +3,7 @@ import multer from "multer";
 import Controller from "../../interfaces/controller.interface";
 import adminMiddleware from "../../middleware/admin.middleware";
 import ProductDTO from "../../product/product.dto";
+import IProduct from "../../product/product.interface";
 import { fileFilter, fileStorage } from "../../util/multer";
 import AdminProductService from "./admin.product.service";
 
@@ -31,12 +32,14 @@ class AdminProductController implements Controller {
   ): Promise<void> => {
     try {
       const productData: ProductDTO = request.body;
-      const imagePath: any = request.files;
+      const files: any = request.files;
       if (!productData)
         response.sendStatus(400).json({ message: "No data in body" });
-      if (!imagePath)
-        response.sendStatus(400).json({ message: "No File in body" });
-      const product = this.adminProductService.createProduct();
+      if (!files) response.sendStatus(400).json({ message: "No File in body" });
+      const product: IProduct = await this.adminProductService.createProduct(
+        productData,
+        files
+      );
       response.send(product);
     } catch (error) {
       response.send(error);

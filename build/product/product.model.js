@@ -26,7 +26,7 @@ const productSchema = new mongoose_1.default.Schema({
     maximumQuantity: Number,
     manufacturer: String,
     madeIn: String,
-    image: String,
+    image: [String],
     description: String,
     isAreaCalculate: Boolean,
     isCancelable: Boolean,
