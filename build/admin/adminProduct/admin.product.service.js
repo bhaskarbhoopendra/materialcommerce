@@ -16,6 +16,15 @@ class AdminProductService {
             console.log(product);
             return product;
         };
+        this.updateProduct = async (productId, productData, files) => {
+            const file = files.map((file) => {
+                return file.path;
+            });
+            const newUpdatedProduct = Object.assign(Object.assign({}, productData), { image: file });
+            console.log({ newUpdatedProduct });
+            const updatedProduct = await this.productDbManager.UpdateProduct(productId, productData);
+            return updatedProduct;
+        };
     }
 }
 exports.default = AdminProductService;

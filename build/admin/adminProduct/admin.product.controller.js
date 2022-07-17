@@ -29,10 +29,27 @@ class AdminProductController {
                 response.send(error);
             }
         };
+        this.updateProduct = async (request, response) => {
+            try {
+                const productId = request.params.productId;
+                if (!productId)
+                    response.send("Product Id not found");
+                const productData = request.body;
+                const files = request.files;
+                if (!files)
+                    response.send("Files are not found");
+                const updatedProduct = await this.adminProductService.updateProduct(productId, productData, files);
+                response.send(updatedProduct);
+            }
+            catch (error) {
+                response.send(error);
+            }
+        };
         this.initializeRoutes();
     }
     initializeRoutes() {
         this.router.post(`${this.path}/create`, admin_middleware_1.default, this.upload.array("productImage", 10), this.createProduct);
+        this.router.put(`${this.path}/update/:productId`, admin_middleware_1.default, this.upload.array("productImage", 10), this.updateProduct);
     }
 }
 exports.default = AdminProductController;

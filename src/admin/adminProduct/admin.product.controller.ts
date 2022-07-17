@@ -24,6 +24,13 @@ class AdminProductController implements Controller {
       this.upload.array("productImage", 10),
       this.createProduct
     );
+
+    this.router.put(
+      `${this.path}/update/:productId`,
+      adminMiddleware,
+      this.upload.array("productImage", 10),
+      this.updateProduct
+    );
   }
 
   private createProduct = async (
@@ -41,6 +48,24 @@ class AdminProductController implements Controller {
         files
       );
       response.send(product);
+    } catch (error) {
+      response.send(error);
+    }
+  };
+
+  private updateProduct = async (request: Request, response: Response) => {
+    try {
+      const productId: string = request.params.productId;
+      if (!productId) response.send("Product Id not found");
+      const productData: ProductDTO = request.body;
+      const files: any = request.files;
+      if (!files) response.send("Files are not found");
+      const updatedProduct = await this.adminProductService.updateProduct(
+        productId,
+        productData,
+        files
+      );
+      response.send(updatedProduct);
     } catch (error) {
       response.send(error);
     }

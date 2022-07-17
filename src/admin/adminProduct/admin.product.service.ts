@@ -22,4 +22,25 @@ export default class AdminProductService {
     console.log(product);
     return product;
   };
+
+  updateProduct = async (
+    productId: string,
+    productData: ProductDTO,
+    files: any
+  ) => {
+    const file = files.map((file: any) => {
+      return file.path;
+    });
+    const newUpdatedProduct = {
+      ...productData,
+      image: file,
+    };
+    console.log({ newUpdatedProduct });
+    const updatedProduct = await this.productDbManager.UpdateProduct(
+      productId,
+      productData
+    );
+
+    return updatedProduct;
+  };
 }
