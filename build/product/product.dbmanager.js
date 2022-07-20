@@ -14,5 +14,8 @@ class ProductDbManager {
     async UpdateProduct(productId, data) {
         return await this.product.findByIdAndUpdate(productId, Object.assign({}, data), { new: true });
     }
+    async deleteProduct(productId) {
+        return await this.product.findByIdAndDelete(productId);
+    }
 }
 exports.default = ProductDbManager;

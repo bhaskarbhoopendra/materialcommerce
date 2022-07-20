@@ -45,11 +45,22 @@ class AdminProductController {
                 response.send(error);
             }
         };
+        this.deleteProduct = async (request, response) => {
+            try {
+                const productId = request.params.productId;
+                if (!productId)
+                    response.send("Product Id not found");
+                const deletedProduct = await this.adminProductService.deleteProduct(productId);
+                response.send("Product Deleted");
+            }
+            catch (error) { }
+        };
         this.initializeRoutes();
     }
     initializeRoutes() {
         this.router.post(`${this.path}/create`, admin_middleware_1.default, this.upload.array("productImage", 10), this.createProduct);
         this.router.put(`${this.path}/update/:productId`, admin_middleware_1.default, this.upload.array("productImage", 10), this.updateProduct);
+        this.router.delete(`${this.path}/delete/:productId`, admin_middleware_1.default, this.deleteProduct);
     }
 }
 exports.default = AdminProductController;
