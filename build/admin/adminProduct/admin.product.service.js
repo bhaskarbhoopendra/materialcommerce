@@ -25,6 +25,9 @@ class AdminProductService {
             const updatedProduct = await this.productDbManager.UpdateProduct(productId, productData);
             return updatedProduct;
         };
+        this.deleteProduct = async (productId) => {
+            const deltedProdct = await this.productDbManager.deleteProduct(productId);
+        };
     }
 }
 exports.default = AdminProductService;

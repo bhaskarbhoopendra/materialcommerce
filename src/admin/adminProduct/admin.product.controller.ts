@@ -31,6 +31,12 @@ class AdminProductController implements Controller {
       this.upload.array("productImage", 10),
       this.updateProduct
     );
+
+    this.router.delete(
+      `${this.path}/delete/:productId`,
+      adminMiddleware,
+      this.deleteProduct
+    );
   }
 
   private createProduct = async (
@@ -69,6 +75,17 @@ class AdminProductController implements Controller {
     } catch (error) {
       response.send(error);
     }
+  };
+
+  private deleteProduct = async (request: Request, response: Response) => {
+    try {
+      const productId: string = request.params.productId;
+      if (!productId) response.send("Product Id not found");
+      const deletedProduct = await this.adminProductService.deleteProduct(
+        productId
+      );
+      response.send("Product Deleted");
+    } catch (error) {}
   };
 }
 

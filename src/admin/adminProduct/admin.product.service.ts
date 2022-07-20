@@ -43,4 +43,8 @@ export default class AdminProductService {
 
     return updatedProduct;
   };
+
+  deleteProduct = async (productId: string) => {
+    const deltedProdct = await this.productDbManager.deleteProduct(productId);
+  };
 }

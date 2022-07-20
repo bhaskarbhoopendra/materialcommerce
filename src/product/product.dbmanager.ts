@@ -17,4 +17,8 @@ export default class ProductDbManager {
       { new: true }
     );
   }
+
+  async deleteProduct(productId: string) {
+    return await this.product.findByIdAndDelete(productId);
+  }
 }
