@@ -29,7 +29,8 @@ class AdminauthenticateService {
     };
   }
   public createCookie(tokenData: TokenData) {
-    return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
+    const value = true;
+    return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}; `;
   }
   public createToken(admin: Iadmin): TokenData {
     const expiresIn = 60 * 60; // an hour

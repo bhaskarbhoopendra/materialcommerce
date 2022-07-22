@@ -7,8 +7,12 @@ class WarehouseDbManager {
   public data: any;
   constructor() {}
 
+  createWarehouse = async (data: any) => {
+    return await this.warehouse.create({ ...data });
+  };
+
   public getAllWarehouse = async () => {
-    return await this.warehouse.find({});
+    return await this.warehouse.find({}).populate("vendor");
   };
 
   public warehouseByID = async (id: string) => {

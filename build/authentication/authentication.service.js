@@ -36,37 +36,28 @@ class AuthenticationService {
     constructor() {
         this.user = user_model_1.default;
         this.userDbManager = new user_dbmanager_1.default();
-        this.register = async (userData) => {
-            try {
-                const email = userData.email;
-                const password = userData.password;
-                if (await this.user.findOne({ email }))
-                    throw new userWithThatEmailAlreadyExistsException_1.default(email);
-                const hashedPassword = await bcrypt.hash(password, 10);
-                const user = await this.userDbManager.createUser(Object.assign(Object.assign({}, userData), { password: hashedPassword }));
-                const tokenData = this.createToken(user);
-                const cookie = this.createCookie(tokenData);
-                return {
-                    user,
-                    cookie,
-                };
-            }
-            catch (error) {
-                return error;
-            }
+        this.register = async (data) => {
+            const { email, password } = data;
+            const foundUser = await this.user.findOne({ email: email });
+            if (foundUser)
+                throw new userWithThatEmailAlreadyExistsException_1.default(email);
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const newUser = Object.assign(Object.assign({}, data), { password: hashedPassword });
+            const user = await this.user.create(Object.assign({}, newUser));
+            const tokenData = this.createToken(user);
+            return {
+                user,
+                tokenData,
+            };
         };
-        this.login = async (userCred) => {
-            const email = userCred.email;
-            const password = userCred.password;
+        this.login = async (userData) => {
+            const { email, password } = userData;
             const user = await this.user.findOne({ email });
             if (!user)
                 throw new wrongCredentialsException_1.default();
             const comparePasswords = await bcrypt.compare(password, user.get("password", null, { getters: false }));
-            if (!comparePasswords)
-                throw new wrongCredentialsException_1.default();
             const tokenData = this.createToken(user);
-            const cookie = this.createCookie(tokenData);
-            return { user, tokenData, cookie };
+            return { user, tokenData };
         };
         this.createToken = (user) => {
             const expiresIn = 60 * 60;

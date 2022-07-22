@@ -48,7 +48,8 @@ class AdminauthenticateService {
         };
     }
     createCookie(tokenData) {
-        return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
+        const value = true;
+        return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}; `;
     }
     createToken(admin) {
         const expiresIn = 60 * 60; // an hour

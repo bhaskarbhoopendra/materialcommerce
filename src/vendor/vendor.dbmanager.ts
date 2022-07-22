@@ -1,5 +1,5 @@
+import VerifiedStatus from "../enums/enums.vendor";
 import vendorDto from "./vendor.dto";
-import Ivendor from "./vendor.interface";
 import VendorModel from "./vendor.model";
 
 class VendorDbManager {
@@ -19,7 +19,7 @@ class VendorDbManager {
   };
 
   findAllVendors = async () => {
-    return await this.vendor.find({});
+    return await this.vendor.find({}).lean();
   };
 
   findVendorByEmail = async (email: string) => {
@@ -27,11 +27,27 @@ class VendorDbManager {
   };
 
   updateVendorById = async (id: string, data: any) => {
-    return await this.vendor.findByIdAndUpdate(id, data);
+    return await this.vendor.findByIdAndUpdate(id, data, { new: true });
   };
 
   deleteVendorById = async (id: string) => {
     return await this.vendor.findByIdAndDelete(id);
+  };
+
+  confirmedVendor = async () => {
+    return await this.vendor
+      .find({
+        isConfirmedVendor: VerifiedStatus.CONFIRMED,
+      })
+      .lean();
+  };
+
+  unconfrimedVendors = async () => {
+    return await this.vendor
+      .find({
+        isConfirmedVendor: VerifiedStatus.PENDING,
+      })
+      .lean();
   };
 }
 

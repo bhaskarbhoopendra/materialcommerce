@@ -58,7 +58,12 @@ class AdminAuthenticationController implements Controller {
         );
         if (isPasswordMatching) {
           const tokenData = this.createToken(admin);
-          response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+          const cookie = this.createCookie(tokenData);
+          // response.setHeader("Set-Cookie", [cookie]);
+          response.cookie("Authorization", `${tokenData.token}`, {
+            expires: new Date(Date.now() + 900000),
+            httpOnly: true,
+          });
           response.send({ tokenData, admin });
         } else {
           next(new WrongCredentialsException());
@@ -81,7 +86,8 @@ class AdminAuthenticationController implements Controller {
   };
 
   private createCookie(tokenData: TokenData) {
-    return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
+    const value = true;
+    return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
   }
 
   public createToken(admin: Iadmin): TokenData {
@@ -96,5 +102,24 @@ class AdminAuthenticationController implements Controller {
     };
   }
 }
+
+// router.get('/vendor-requests', async (req, res) => {
+//   try {
+//     // Vendors who have been confirmed
+//     const confirmedVendorData = await NewVendor.find({ confirmed: true }).select('name email address phoneNumber GST company')
+//     // Vendors who have not been confirmed
+//     const unconfirmedVendorData = await NewVendor.find({ confirmed: false }).select('name email address phoneNumber GST company')
+
+//     const vendorRequestData = {
+//       confirmed: confirmedVendorData,
+//       unconfirmed: unconfirmedVendorData
+//     }
+
+//     res.status(200).json(vendorRequestData)
+//   } catch (e) {
+//     console.error(e.message)
+//     res.status(500).send('Server error')
+//   }
+// })
 
 export default AdminAuthenticationController;

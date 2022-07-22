@@ -20,7 +20,11 @@ const vendorSchema = new mongoose_1.default.Schema({
     organization: String,
     company: String,
     isVendor: Boolean,
-    isConfirmedVendor: { enum: ["confirmed", "pending"] },
+    isConfirmedVendor: {
+        type: String,
+        enum: ["confirmed", "pending"],
+        default: "pending",
+    },
     password: {
         type: String,
         get: () => undefined,
@@ -28,9 +32,10 @@ const vendorSchema = new mongoose_1.default.Schema({
     warehouse: [
         {
             type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: "Warehouse",
+            ref: "warehouse",
         },
     ],
+    phoneNumber: Number,
 });
-const VendorModel = mongoose_1.default.model("Vendor", vendorSchema);
+const VendorModel = mongoose_1.default.model("vendor", vendorSchema);
 exports.default = VendorModel;

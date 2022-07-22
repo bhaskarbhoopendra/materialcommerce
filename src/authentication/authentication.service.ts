@@ -8,53 +8,40 @@ import * as jwt from "jsonwebtoken";
 import DataStoredInToken from "../interfaces/dataStoredInToken.interface";
 import WrongCredentialsException from "../exceptions/wrongCredentialsException";
 import loginDto from "./login.dto";
+import UserDTO from "../user/user.dto";
 class AuthenticationService {
   user = UserModel;
   userDbManager = new UserDbManager();
 
-  constructor() { }
+  constructor() {}
 
-  register = async (userData: any): Promise<any> => {
-    try {
-      const email = userData.email;
-      const password = userData.password;
-      if (await this.user.findOne({ email }))
-        throw new UserWithThatEmailAlreadyExistsException(email);
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      const user: IUser = await this.userDbManager.createUser({
-        ...userData,
-        password: hashedPassword,
-      });
-
-      const tokenData: TokenData = this.createToken(user);
-      const cookie = this.createCookie(tokenData);
-
-      return {
-        user,
-        cookie,
-      };
-    } catch (error) {
-      return error;
-    }
+  register = async (data: UserDTO): Promise<any> => {
+    const { email, password } = data;
+    const foundUser = await this.user.findOne({ email: email });
+    if (foundUser) throw new UserWithThatEmailAlreadyExistsException(email);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = {
+      ...data,
+      password: hashedPassword,
+    };
+    const user = await this.user.create({ ...newUser });
+    const tokenData = this.createToken(user);
+    return {
+      user,
+      tokenData,
+    };
   };
 
-  login = async (userCred: loginDto): Promise<any> => {
-    const email: string = userCred.email;
-    const password: string = userCred.password;
-
+  login = async (userData: loginDto): Promise<any> => {
+    const { email, password } = userData;
     const user = await this.user.findOne({ email });
     if (!user) throw new WrongCredentialsException();
-
-    const comparePasswords = await bcrypt.compare(password, user.get("password", null, { getters: false }));
-
-    if (!comparePasswords) throw new WrongCredentialsException();
-
+    const comparePasswords = await bcrypt.compare(
+      password,
+      user.get("password", null, { getters: false })
+    );
     const tokenData = this.createToken(user);
-    const cookie = this.createCookie(tokenData);
-
-    return { user, tokenData, cookie };
+    return { user, tokenData };
   };
 
   createToken = (user: IUser) => {
