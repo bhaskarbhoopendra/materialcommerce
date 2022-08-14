@@ -1,9 +1,14 @@
 import { Types } from 'mongoose';
+import CartDto from './cart.dto';
 
 interface ICart {
-  userId: Types.ObjectId;
-  productId: Types.ObjectId;
-  quantity: string;
+  user: string;
+  products: [
+    {
+      productId: string;
+      quantity: number;
+    }
+  ];
 }
 
 export default ICart;

@@ -13,6 +13,7 @@ import PincodeTypeController from './freightrate/pincodetype/pincodetype.control
 import ZoneController from './freightrate/zone/zone.controller';
 import GoogleAuthController from './googleauth/googleauth.controller';
 import ProductController from './product/product.controller';
+import UserController from './user/user.controller';
 import VendorAuthenticationController from './vendor/vendor.authentication.controller';
 import VendorWarehouseController from './vendor/vendorWarehouse/vendor.warehouse.controller';
 import WarehouseController from './warehouse/warehouse.controller';
@@ -34,6 +35,7 @@ const app = new App([
   new AdminVendorWarehouseController(),
   new AdminProductController(),
   new CartController(),
+  new UserController(),
 ]);
 
 app.listen();

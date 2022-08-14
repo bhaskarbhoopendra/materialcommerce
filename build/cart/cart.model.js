@@ -4,16 +4,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+let cartProducts = new mongoose_1.default.Schema({
+    productId: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: 'product',
+    },
+    quantity: {
+        type: Number,
+        default: 1,
+    },
+});
 const cartSchema = new mongoose_1.default.Schema({
-    quantity: Number,
     user: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: 'user',
     },
-    product: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: 'product',
-    },
+    products: [cartProducts],
 });
 const CartModel = mongoose_1.default.model('cart', cartSchema);
 exports.default = CartModel;

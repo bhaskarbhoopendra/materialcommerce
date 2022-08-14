@@ -8,7 +8,12 @@ interface Base {
   phoeNumber: number;
   googleId: string;
   profilePhoto: string;
-  cart: [string];
+  cart: [
+    {
+      productId: string;
+      quantity: number;
+    }
+  ];
   wishlist: [string];
 }
 

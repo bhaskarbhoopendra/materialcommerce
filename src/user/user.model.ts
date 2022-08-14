@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import IUser from "./user.interface";
+import mongoose from 'mongoose';
+import IUser from './user.interface';
 
 const userSchema = new mongoose.Schema({
   googleId: {
@@ -13,7 +13,15 @@ const userSchema = new mongoose.Schema({
   phoneNumber: String,
   source: { type: String },
   lastVisited: { type: Date, default: new Date() },
-  cart: [String],
+  cart: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: 'product' },
+      quantity: {
+        type: Number,
+        default: 1,
+      },
+    },
+  ],
   wishlist: [String],
 });
 
@@ -25,7 +33,7 @@ export const addressSchema = new mongoose.Schema({
   phoneNumber: Number,
 });
 
-const UserModel = mongoose.model<IUser & mongoose.Document>("user", userSchema);
+const UserModel = mongoose.model<IUser & mongoose.Document>('user', userSchema);
 
 export default UserModel;
 

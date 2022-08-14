@@ -17,7 +17,15 @@ const userSchema = new mongoose_1.default.Schema({
     phoneNumber: String,
     source: { type: String },
     lastVisited: { type: Date, default: new Date() },
-    cart: [String],
+    cart: [
+        {
+            productId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'product' },
+            quantity: {
+                type: Number,
+                default: 1,
+            },
+        },
+    ],
     wishlist: [String],
 });
 exports.addressSchema = new mongoose_1.default.Schema({
@@ -27,6 +35,6 @@ exports.addressSchema = new mongoose_1.default.Schema({
     pincode: Number,
     phoneNumber: Number,
 });
-const UserModel = mongoose_1.default.model("user", userSchema);
+const UserModel = mongoose_1.default.model('user', userSchema);
 exports.default = UserModel;
 //source: { type: String, required: [true, "Source not specified"] },

@@ -18,6 +18,7 @@ const pincodetype_controller_1 = __importDefault(require("./freightrate/pincodet
 const zone_controller_1 = __importDefault(require("./freightrate/zone/zone.controller"));
 const googleauth_controller_1 = __importDefault(require("./googleauth/googleauth.controller"));
 const product_controller_1 = __importDefault(require("./product/product.controller"));
+const user_controller_1 = __importDefault(require("./user/user.controller"));
 const vendor_authentication_controller_1 = __importDefault(require("./vendor/vendor.authentication.controller"));
 const vendor_warehouse_controller_1 = __importDefault(require("./vendor/vendorWarehouse/vendor.warehouse.controller"));
 const warehouse_controller_1 = __importDefault(require("./warehouse/warehouse.controller"));
@@ -38,5 +39,6 @@ const app = new app_1.default([
     new admin_vendor_warehouse_controller_1.default(),
     new admin_product_controller_1.default(),
     new cart_controller_1.default(),
+    new user_controller_1.default(),
 ]);
 app.listen();
