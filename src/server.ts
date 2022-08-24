@@ -1,10 +1,13 @@
 import "dotenv/config";
+import { title } from "process";
 import AdminController from "./admin/admin.controller";
 import AdminAuthenticationController from "./admin/adminAuthentication/adminAuthentication.controller";
 import AdminProductController from "./admin/adminProduct/admin.product.controller";
 import AdminVendorWarehouseController from "./admin/adminVendorWarehouse/admin.vendor.warehouse.controller";
 import App from "./app";
 import AuthenticationController from "./authentication/authentication.controller";
+import BlogController from "./blog/blog.controller";
+import CartController from "./cart/cart.controller";
 import CategoryController from "./categories/category/category.controller";
 import SubCategoryController from "./categories/sub-category/subcateogry.controller";
 import FreightRateController from "./freightrate/freightrate.controller";
@@ -32,6 +35,8 @@ const app = new App([
   new VendorWarehouseController(),
   new AdminVendorWarehouseController(),
   new AdminProductController(),
+  new CartController(),
+  new BlogController(),
 ]);
 
 app.listen();
