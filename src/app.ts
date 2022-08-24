@@ -42,7 +42,7 @@ class App {
     if (process.env.NODE_ENV === "production") {
       this.app.use(
         cors({
-          origin: "https://walrus-app-4iexv.ondigitalocean.app",
+          origin: "http://localhost:5173",
           credentials: true,
         })
       );
