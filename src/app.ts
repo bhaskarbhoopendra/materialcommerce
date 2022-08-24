@@ -42,7 +42,7 @@ class App {
     if (process.env.NODE_ENV === "production") {
       this.app.use(
         cors({
-          origin: "https://orca-app-hlc5k.ondigitalocean.app",
+          origin: "https://walrus-app-4iexv.ondigitalocean.app",
           credentials: true,
         })
       );
@@ -61,7 +61,7 @@ class App {
     } else {
       this.app.use(
         cors({
-          origin: "http://localhost:3000",
+          origin: "http://localhost:5173",
           credentials: true,
         })
       );

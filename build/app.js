@@ -50,7 +50,7 @@ class App {
         this.app.use(express_1.default.json());
         if (process.env.NODE_ENV === "production") {
             this.app.use((0, cors_1.default)({
-                origin: "https://orca-app-hlc5k.ondigitalocean.app",
+                origin: "https://walrus-app-4iexv.ondigitalocean.app",
                 credentials: true,
             }));
             this.app.use((0, express_session_1.default)({
@@ -66,7 +66,7 @@ class App {
         }
         else {
             this.app.use((0, cors_1.default)({
-                origin: "http://localhost:3000",
+                origin: "http://localhost:5173",
                 credentials: true,
             }));
             this.app.use((0, express_session_1.default)({

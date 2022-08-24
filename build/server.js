@@ -10,6 +10,8 @@ const admin_product_controller_1 = __importDefault(require("./admin/adminProduct
 const admin_vendor_warehouse_controller_1 = __importDefault(require("./admin/adminVendorWarehouse/admin.vendor.warehouse.controller"));
 const app_1 = __importDefault(require("./app"));
 const authentication_controller_1 = __importDefault(require("./authentication/authentication.controller"));
+const blog_controller_1 = __importDefault(require("./blog/blog.controller"));
+const cart_controller_1 = __importDefault(require("./cart/cart.controller"));
 const category_controller_1 = __importDefault(require("./categories/category/category.controller"));
 const subcateogry_controller_1 = __importDefault(require("./categories/sub-category/subcateogry.controller"));
 const freightrate_controller_1 = __importDefault(require("./freightrate/freightrate.controller"));
@@ -36,5 +38,7 @@ const app = new app_1.default([
     new vendor_warehouse_controller_1.default(),
     new admin_vendor_warehouse_controller_1.default(),
     new admin_product_controller_1.default(),
+    new cart_controller_1.default(),
+    new blog_controller_1.default(),
 ]);
 app.listen();
