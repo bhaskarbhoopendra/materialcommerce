@@ -27,7 +27,7 @@ class AuthenticationController {
                     expires: new Date(Date.now() + 900000),
                     httpOnly: true,
                 });
-                response.send({ user });
+                response.send(user);
             }
             catch (error) {
                 next(error);
